@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>How to draw a batman logo</title>
+  <meta charset="utf-8">
+  <meta name="description" content="How to draw a batman logo">
+  <meta name="author" content="Guangchuang Yu">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>How to draw a batman logo</h1>
+    <h2></h2>
+    <p>Guangchuang Yu<br/>School of Publich Health</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Intended Learning Outcomes</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><br></br>
+After this class, we will be able to:</p>
+
+<ol>
+<li>Use <code>R</code> for calculation</li>
+<li>Generate simple figures using <code>ggplot2</code> </li>
+<li>Able to draw the <code>batman</code> logo using <code>R</code> &amp; <code>ggplot2</code></li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <article data-timings="">
+    <p><img src="figures/batman.gif" width="500" align="left"/>
+<img src="figures/batman_logo.png" width="500", align="right"/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2><em>Batman</em> Equation</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="figures/batman_equations.jpg", width="550" align="middle"/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2><em>Batman</em> Equation</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>\[\begin{align}
+& F1: ((\frac{x}{7})^2 \cdot \sqrt{\frac{||x|-3|}{(|x|-3)}}+ (\frac{y}{3})^2 \cdot \sqrt{\frac{|y+3 \cdot \frac{\sqrt{33}}{7}|}{y+3 \cdot \frac{\sqrt{33}}{7}}}-1)\\
+& F2: (|\frac{x}{2}|-((3 \cdot \frac{\sqrt{33}-7)}{112}) \cdot x^2-3+\sqrt{1-(||x|-2|-1)^2}-y)\\
+& F3: (9 \cdot \sqrt{\frac{|(|x|-1) \cdot (|x|-0.75)|}{((1-|x|) \cdot (|x|-0.75))}}-8 \cdot |x|-y)\\
+& F4: (3 \cdot |x|+0.75 \cdot \sqrt{\frac{|(|x|-0.75) \cdot (|x|-0.5)|}{((0.75-|x|) \cdot (|x|-0.5))}}-y)\\
+& F5: (2.25 \cdot \sqrt{\frac{|(x-0.5) \cdot (x+0.5)|}{((0.5-x) \cdot (0.5+x))}}-y)\\
+& F6: (\frac{6 \cdot \sqrt{10}}{7}+(1.5-0.5 \cdot |x|) \cdot \sqrt{\frac{||x|-1|}{|x|-1}}-(\frac{6 \cdot \sqrt{10}}{14}) \cdot \sqrt{4-(|x|-1)^2}-y)
+\end{align}\]</p>
+
+<p>Batman Equation: \(F1 \cdot F2 \cdot F3 \cdot F4 \cdot F5 \cdot F6 = 0\)</p>
+
+<!--
+As a product of factors is 0 if and only if any one of them is 0, multiplying these six factors puts the curves together. This graph is no more than the combination of six curves.
+-->
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2><em><em>Batman</em></em> logo</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="figures/batman_logo_hand.png", width="550" align="left"/>
+<img src="figures/bat1.png", width="550" align="right"/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Why <img src="figures/Rlogo.jpg" alt=""> and <code>ggplot2</code> ?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>R: Environment for statistical computing and graphics</p>
+
+<ul>
+<li>Free software</li>
+<li><a href="www.r-project.org">www.r-project.org</a></li>
+</ul></li>
+<li><p>ggplot2: a plotting system for R, based on the grammar of graphics</p>
+
+<ul>
+<li>Follows a grammar, just like any language</li>
+<li>A <font color="steelblue">plot</font> is made up of multiple layers</li>
+<li>A <font color="steelblue">layer</font> consists of data, a set of <font color="steelblue">mappings</font> between variables and aesthetics, a <font color="steelblue">geom</font>emtrec object and a <font color="steelblue">stat</font>istical transformation</li>
+</ul></li>
+</ul>
+
+<pre><code>R is &quot;the most powerful and flexible statistical programming language in the world.&quot;
+                                      -- Norman Nie, scholar and co-founder of SPSS
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Installation</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Download and Install R from CRAN <a href="http://cran.r-project.org">http://cran.r-project.org</a></p>
+
+<p><img src="figures/cran.png" alt=""></p>
+
+<p>Use the following command to install <code>ggplot2</code> package:</p>
+
+<pre><code class="r">install.packages(&quot;ggplot2&quot;)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Loading require libraries</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><br></br></p>
+
+<pre><code class="r">library(ggplot2)
+library(colorspace)
+cols &lt;- rainbow_hcl(6)
+print(cols)
+</code></pre>
+
+<pre><code>## [1] &quot;#E495A5&quot; &quot;#C7A76C&quot; &quot;#86B875&quot; &quot;#39BEB1&quot; &quot;#7DB0DD&quot; &quot;#CD99D8&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Function 1</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>\[((\frac{x}{7})^2 \cdot \sqrt{\frac{||x|-3|}{(|x|-3)}}+ (\frac{y}{3})^2 \cdot \sqrt{\frac{|y+3 \cdot \frac{\sqrt{33}}{7}|}{y+3 \cdot \frac{\sqrt{33}}{7}}}-1) = 0\]</p>
+
+<pre><code class="r">f1 &lt;- function(x) {
+    y1 &lt;- 3*sqrt(1-(x/7)^2)
+    y2 &lt;- -3*sqrt(1-(x/7)^2)
+    y &lt;- c(y1,y2)
+    d &lt;- data.frame(x=x,y=y)
+    d &lt;- d[d$y &gt; -3*sqrt(33)/7,]
+    return(d)
+}
+
+x1 &lt;- c(seq(3, 7, 0.001), seq(-7, -3, 0.001))
+d1 &lt;- f1(x1)
+
+p1 &lt;- ggplot(data=d1, aes(x, y)) + geom_point(color=cols[1])
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Function 1</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-4-1.png" alt="plot of chunk unnamed-chunk-4"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Function 2</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>\[(|\frac{x}{2}|-((3 \cdot \frac{\sqrt{33}-7)}{112}) \cdot x^2-3+\sqrt{1-(||x|-2|-1)^2}-y) = 0\]</p>
+
+<pre><code class="r">f2 &lt;- function(x) {
+   y &lt;- abs(x/2)-(3*sqrt(33)-7)*x^2/112-3 + sqrt(1-(abs(abs(x)-2)-1)^2)
+   d &lt;- data.frame(x=x, y=y)
+   return(d)
+}
+
+x2 &lt;- seq(-4, 4, 0.001)
+d2 &lt;- f2(x2)
+p2 &lt;- p1 + geom_point(data=d2, color=cols[2])
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Function 2</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-6-1.png" alt="plot of chunk unnamed-chunk-6"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Function 3</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>\[(9 \cdot \sqrt{\frac{|(|x|-1) \cdot (|x|-0.75)|}{((1-|x|) \cdot (|x|-0.75))}}-8 \cdot |x|-y) = 0\]</p>
+
+<pre><code class="r">f3 &lt;- function(x) {
+   y &lt;- 9 - 8 * abs(x)
+   d &lt;- data.frame(x=x, y=y)
+   return(d)
+}
+
+x3 &lt;- c(seq(0.75, 1, 0.001), seq(-1, -0.75, 0.001))
+d3 &lt;- f3(x3)
+p3 &lt;- p2 + geom_point(data=d3, color=cols[3])
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Function 3</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-8-1.png" alt="plot of chunk unnamed-chunk-8"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Function 4</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>\[(3 \cdot |x|+0.75 \cdot \sqrt{\frac{|(|x|-0.75) \cdot (|x|-0.5)|}{((0.75-|x|) \cdot (|x|-0.5))}}-y) = 0\]</p>
+
+<pre><code class="r">f4 &lt;- function(x) {
+   y &lt;- 3 * abs(x) + 0.75
+   d &lt;- data.frame(x=x, y=y)
+   return(d)
+}
+
+x4 &lt;- c(seq(0.5, 0.75, 0.001), seq(-0.75, -0.5, 0.001))
+d4 &lt;- f4(x4)
+p4 &lt;- p3 + geom_point(data=d4, color=cols[4])
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Function 4</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-10-1.png" alt="plot of chunk unnamed-chunk-10"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Function 5</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>\[(2.25 \cdot \sqrt{\frac{|(x-0.5) \cdot (x+0.5)|}{((0.5-x) \cdot (0.5+x))}}-y) = 0\]</p>
+
+<pre><code class="r">f5 &lt;- function(x) {
+   y &lt;- rep(2.25, length(x))
+   d &lt;- data.frame(x, y)
+   return(d)
+}
+
+x5 &lt;- seq(-0.5, 0.5, 0.001)
+d5 &lt;- f5(x5)
+p5 &lt;- p4 + geom_point(data=d5, color=cols[5])
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Function 5</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-12-1.png" alt="plot of chunk unnamed-chunk-12"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Function 6</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>\[(\frac{6 \cdot \sqrt{10}}{7}+(1.5-0.5 \cdot |x|) \cdot \sqrt{\frac{||x|-1|}{|x|-1}}-(\frac{6 \cdot \sqrt{10}}{14}) \cdot \sqrt{4-(|x|-1)^2}-y) = 0\]</p>
+
+<pre><code class="r">f6 &lt;- function(x) {
+    y &lt;- 6 * sqrt(10)/7 + (1.5 - 0.5 * abs(x)) *
+           sqrt(abs(abs(x)-1)/(abs(x)-1)) -
+            6 * sqrt(10)/14 * sqrt(4-(abs(x)-1)^2)
+    d &lt;- data.frame(x=x, y=y)
+    return(d)
+}
+
+x6 &lt;- c(seq(-3, -1, 0.001), seq(1, 3, 0.001))
+d6 &lt;- f6(x6)
+p6 &lt;- p5 + geom_point(data=d6, color=cols[6])
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Function 6</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-14-1.png" alt="plot of chunk unnamed-chunk-14"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Recap</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-15-1.png" alt="plot of chunk unnamed-chunk-15"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">library(magrittr)
+dd &lt;- rbind(d1, d2) %&gt;% rbind(., d3) %&gt;% rbind(., d4) %&gt;%
+    rbind(., d5) %&gt;% rbind(., d6)
+
+n  &lt;- 600
+dd &lt;- dd[sample(1:nrow(dd), n),]
+dd$size  &lt;- runif(n, min=0.5, max=15)
+dd$color &lt;- factor(sample(1:10, n, TRUE))
+dd$alpha &lt;- runif(n, min=0.1, max=0.4)
+
+npoints  &lt;- 300
+bgPoints &lt;- data.frame(x     = runif(npoints, -8, 8),
+                       y     = runif(npoints, -4, 4),
+                       size  = runif(npoints, 20, 40),
+                       color = factor(sample(1:10, npoints, TRUE)),
+                       alpha = runif(npoints, min=0.05, max=0.15))
+
+data &lt;- rbind(dd, bgPoints)
+p &lt;- ggplot(data, aes(x, y, color=color)) + geom_point(alpha=data$alpha, size=data$size)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <article data-timings="">
+    <p><br></br></p>
+
+<pre><code class="r">p + ggtree::theme_tree() + xlab(&quot;&quot;) + ylab(&quot;&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-17-1.png" alt="plot of chunk unnamed-chunk-17"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Intended Learning Outcomes'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title=''>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='<em>Batman</em> Equation'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='<em>Batman</em> Equation'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='<em><em>Batman</em></em> logo'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Why <img src="figures/Rlogo.jpg" alt=""> and <code>ggplot2</code> ?'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Installation'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Loading require libraries'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Function 1'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Function 1'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Function 2'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Function 2'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Function 3'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Function 3'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Function 4'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Function 4'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Function 5'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Function 5'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Function 6'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Function 6'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Recap'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title=''>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title=''>
+         23
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

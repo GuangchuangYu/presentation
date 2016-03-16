@@ -1,0 +1,1003 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1024" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="author" content="Guangchuang Yu" />
+
+  <link href="css/impress-demo.css" rel="stylesheet" />
+  <title>cluster analysis | by Guangchuang Yu</title>
+
+</head>
+<body>
+
+<div id="impress" class="impress-not-supported">
+
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+
+
+  <div id="1_title" class="step" data-x="0" data-y="0" data-rotate-y="0" data-scale="2.5">
+    <q>Cluster Analysis and its Applications<br><br>
+    <center>Guangchuang Yu</center>
+    <font size="5.5"><center><a href="mailto:guangchuangyu@gmail.com"><img src="figures/email.png"></a></center></font>
+    </q>
+  </div>
+
+  <div id="2_cluster" class="step" data-x="2000" data-y="0" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00">What is Clustering</font><br></q>
+    <q>
+      <font size=6>
+        <img align="right" src="figures/sheepvector.png" width="260" height="218.5">
+        <li>Clustering is the classification of data objects into similarity groups (clusters) according to a defined distance measure.</li>
+        <li>It is used in many fields, such as machine learning, data mining, pattern recognition, image analysis, genomics, systems biology, <em>etc</em>.</li>
+      </font>
+    </q>   
+  </div>
+
+  <div id="3_using_R" class="step" data-x="2000" data-y="600" data-rotate-y="15" data-scale="1">
+    <q><font color="#D55E00">R programming language</font><br></q>
+    <q>
+      <font size=6>
+        <li>The programming language and environment for statistical computing and graphcis.</li>
+        <li>Easy and intuitive.</li>
+        <li>Contains a large collection of add-on "packages", espcially the Bioconductor project, which is becoming the <em> de facto</em> tools for high-throughput genomic data analysis.</li>
+        <li>Visit <a href="www.r-project.org">www.r-project.org</a> to download/install R and reference manuals.</li>
+      </font>
+    </q>   
+  </div>
+
+  <div id="4_R_environment" class="step" data-x="2200" data-y="1200" data-rotate-y="30" data-scale="1">
+    <q><font color="#D55E00">R environment</font><br></q>
+    <q>
+      <font size=6>
+        <li>I recommend using emacs with ESS, see <a href="http://ess.r-project.org/">http://ess.r-project.org/</a> for details.</li>
+        <li>Alternatively, there are easier environment such as <a href="http://www.sciviews.org/Tinn-R/">Tinn-R</a> and <a href="http://www.rstudio.com/ide/">RStudio</a>.</li>
+      </font>
+    </q>   
+  </div>
+
+  <div id="5_why_R" class="step" data-x="1000" data-y="1400" data-rotate-y="10" data-scale="1">
+    <q><font color="#D55E00">Why clustering in R ?</font><br></q>
+    <q>
+      <font size=6>
+        <li>Efficient data structures and functions for clustering.</li>
+        <li>Efficient environment for algorithm prototyping and benchmarking.</li>
+        <li>Comprehensive set of clustering and machine learning libraries.</li>
+        <li>Standard for data analysis in many areas.</li>
+      </font>
+    </q>   
+  </div>
+
+
+  <div id="6_gene_cluster" class="step" data-x="100" data-y="1400" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00">Gene Clustering</font><br></q>
+    <q>
+      <font size="6">
+        <li>Clustering genes, required a characteristic vector of each gene.</li>
+        <li>The distance is defined between pairs of such vectors.</li>
+        <li>In gene expression, the vector of each gene is its expression pattern.
+        <li>In functional analysis, the vector of each gene is its functional similarities to other genes.</li>
+      </font>
+    </q>
+    
+  </div>
+
+  <div id="7_data_acquision" class="step" data-x="-800" data-y="1400" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00" size="8">Data Acquisition</font><br></q>
+    <p><font color="#0072B2" size="6.5">High-throughtput expreiments</font></p>
+    <q>
+      <font size="6">
+        <img align="right" src="figures/Heat_Map.jpg" width="140" height="307">
+        <li>Microarray</li>
+        <li>Second generation sequencing</li>
+        <li>MS-based proteomics</li>    
+        <li>gene expression data is usually represented by a matrix, with rows corresponding to genes, and columns corresponding to conditions, experiments or time points.</li>
+      </font>
+    </q>   
+  </div>
+
+  <div id="8_data_acquisition" class="step" data-x="-1800" data-y="1400" data-rotate-y="-10" data-scale="1">
+    <q><font color="#D55E00" size="8">Data Acquisition</font><br></q>
+    <p><font color="#0072B2" size="6.5">Functional similarity based on biological knowledge</font></p>
+    <q>
+      <font size="6">       
+        <li>Gene Ontology (GO) provides consistent description of gene and gene products</li>
+        <li>GO covers three domains: BP, CC, and MF</li>
+        <li>GO is organized as a directed acyclic graph (DAG), laying the foundation for quantitative computation of gene knowledge</li>    
+      </font>
+    </q> 
+    <img style="float:middle" src="figures/go_dag.png" width="487" height="203"> 
+  </div>
+
+  <div id="9_data_transformation" class="step" data-x="-1800" data-y="700" data-rotate-y="150" data-scale="1">
+    <q><font color="#D55E00" size="8">Data Transformations</font> &nbsp; &nbsp; &nbsp; &nbsp;<font color="red" size="4">Choice depends on data set!</font><br></q>
+    <p><font color="#0072B2" size="6.5">Center & standardize</font></p>
+    <q>
+      <font size="6">       
+        <li>Center: subtract from each vector its mean</li>
+        <li>Standardize: divide by standard deviation</li>
+      <font color="red">=></font> Mean = 0 and SD = 1   
+      </font>
+    </q> 
+  </div>
+
+  <div id="10_data_transformation" class="step" data-x="-1800" data-y="100" data-rotate-y="140" data-scale="1">
+    <q><font color="#D55E00" size="8">Data Transformations</font> &nbsp; &nbsp; &nbsp; &nbsp;<font color="red" size="4">Choice depends on data set!</font><br></q>
+    <p><font color="#0072B2" size="6.5">Center & scale with the <em>scale()</em> function</font></p>
+    <q>
+      <font size="6"> 
+        <li>Center: subtract from each vector its mean</li>
+        <li>Scale: divide centered vector by their root mean square (rms)</li>      
+        <img src="figures/rms.png"><br>
+      <font color="red">=></font> Mean = 0 and SD = 1   
+      </font>
+    </q> 
+  </div>
+
+  <div id="11_data_transformation" class="step" data-x="-1800" data-y="-400" data-rotate-y="130" data-scale="1">
+    <q><font color="#D55E00" size="8">Data Transformations</font> &nbsp; &nbsp; &nbsp; &nbsp;<font color="red" size="4">Choice depends on data set!</font><br></q>
+    <p><font color="#0072B2" size="6.5">Log transformation<br>
+      Rank transformation: replace measured values by ranks<br>
+      Notransformation
+    </font></p>
+  </div>
+
+  <div id="12_distance_methods" class="step" data-x="-1800" data-y="-900" data-rotate-y="120" data-scale="1">
+    <q><font color="#D55E00" size="8">Distance Methods</font><br></q>
+    <p><font color="#0072B2" size="6.5">Euclidean distance for two profiles X and Y</font></p>
+    <img src="figures/euclidean.png"><br>
+    <q>
+      <font size="6"> 
+      <font color="red">Disadvantages: </font> not scale invariant, not for negative correlations   
+      </font>
+    </q> 
+  </div>
+
+  <div id="13_distance_methods" class="step" data-x="-1800" data-y="-1400" data-rotate-y="30" data-scale="1">
+    <q><font color="#D55E00" size="8">Distance Methods</font><br></q>
+    <q>
+      <font size="6"> 
+        <li>Manhattan distance</li>
+        <!-- d(X,Y) = \sum_{i=1}^n |x_i - y_i| -->
+        <img src="figures/manhattan.png"><br>
+        <li>Chebychev distance</li>
+        <!-- d(X,Y) = \max |x_i - y_i| -->
+        <img src="figures/chebychev.png"><br>
+        <li> Binary, Minowski, Power, Percent disagreement, ...</li>
+      </font>
+    </q>
+  </div>
+
+  <div id="14_distance_methods" class="step" data-x="-1000" data-y="-1500" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00" size="8">Distance Methods</font><br></q>
+    <p><font color="#0072B2" size="6.5">Correlation-based distance: 1-r</font></p>
+    <q>
+      <font size="6"> 
+        <li>Pearson correlation coefficient (PCC)</li>
+        <!-- r=\frac{n\sum_{i=1}^n x_i y_i - \sum_{i=1}^n x_i \sum_{i=1}^n y_i}{\sqrt{(\sum_{i=1}^n x_{i}^2 -(\sum_{i=1}^n x_{i})^2)(\sum_{i=1}^n y_{i}^2 -(\sum_{i=1}^n y_{i})^2)}} -->
+        <img src="figures/pcc.png">
+        &nbsp; &nbsp;&nbsp; &nbsp;<font color="red">Disadvantages: </font> outlier sensitive
+        <li>Spearman correlation coefficient (SCC)</li>
+        &nbsp; &nbsp;&nbsp; &nbsp;Same calculation as PCC but with ranked values!
+      </font>
+    </q>  
+  </div>
+
+  <div id="15_cluster_linkage" class="step" data-x="-100" data-y="-1600" data-rotate-y="10" data-scale="1">
+    <q><font color="#D55E00" size="8">Cluster Linkage</font><br></q>
+    <p><font color="#0072B2" size="6.5">Single Linkage (nearest neighbor)</font></p>
+    <img src="figures/single.png">
+    <p><font color="#0072B2" size="6.5">Complete Linkage (furthest neighbor)</font></p>
+    <img src="figures/complete.png">
+    <p><font color="#0072B2" size="6.5">Average Linkage</font></p>
+    <img src="figures/average.png"> 
+  </div>
+
+  <div id="16_hierachical_cluster" class="step" data-x="400" data-y="-1600" data-rotate-y="180" data-scale="1">
+    <q><font color="#D55E00" size="8">Hierarchical Clustering Steps</font><br></q>
+    <p><font size="6"> 
+      <font color="#0072B2">1.</font>&nbsp; &nbsp; Identify clusters (items) with closest distance.<br>
+      <font color="#0072B2">2.</font>&nbsp; &nbsp; Join them to new clusters.<br>
+      <font color="#0072B2">3.</font>&nbsp; &nbsp; Compute distance between clusters (items).<br>
+      <font color="#0072B2">4.</font>&nbsp; &nbsp; Return to step 1.
+    </font></p>
+  </div>
+
+  <div id="17_hierachical_cluster" class="step" data-x="1200" data-y="-1600" data-rotate-y="150" data-scale="1">
+    <q><font color="#D55E00" size="8">Hierarchical Clustering</font><br></q>
+    <img src="figures/hclust.png">
+  </div>
+
+  <div id="18_hclust" class="step" data-x="2200" data-y="-1600" data-rotate-y="180" data-scale="1">
+    <q><font color="#D55E00" size="8">Hierarchical Clustering</font><br></q>
+    <p><font color="#0072B2" size="6.5">Suppose we have the follow data</font></p>
+
+    <font size="5.5">
+<div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;"><span style="">&gt;</span> <a href="http://inside-r.org/r-doc/base/set.seed"><span style="color: #003399; font-weight: bold;">set.seed</span></a> <span style="">&lt;-</span> <span style="color: #cc66cc;">123</span>
+<span style="">&gt;</span> <a href="http://inside-r.org/r-doc/mgcv/s"><span style="color: #003399; font-weight: bold;">s</span></a> <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/matrix"><span style="color: #003399; font-weight: bold;">matrix</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/base/abs"><span style="color: #003399; font-weight: bold;">abs</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/stats/rnorm"><span style="color: #003399; font-weight: bold;">rnorm</span></a><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">50</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/ncol"><span style="color: #003399; font-weight: bold;">ncol</span></a>=<span style="color: #cc66cc;">5</span><span style="color: #009900;">&#41;</span>
+<span style="">&gt;</span> <a href="http://inside-r.org/r-doc/base/rownames"><span style="color: #003399; font-weight: bold;">rownames</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/mgcv/s"><span style="color: #003399; font-weight: bold;">s</span></a><span style="color: #009900;">&#41;</span> <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/paste"><span style="color: #003399; font-weight: bold;">paste</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;g&quot;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="">:</span><span style="color: #cc66cc;">10</span><span style="color: #339933;">,</span> sep=<span style="color: #0000ff;">&quot;_&quot;</span><span style="color: #009900;">&#41;</span>
+<span style="">&gt;</span> <a href="http://inside-r.org/r-doc/base/colnames"><span style="color: #003399; font-weight: bold;">colnames</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/mgcv/s"><span style="color: #003399; font-weight: bold;">s</span></a><span style="color: #009900;">&#41;</span> <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/paste"><span style="color: #003399; font-weight: bold;">paste</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;t&quot;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="">:</span><span style="color: #cc66cc;">5</span><span style="color: #339933;">,</span> sep=<span style="color: #0000ff;">&quot;_&quot;</span><span style="color: #009900;">&#41;</span>
+<span style="">&gt;</span> <a href="http://inside-r.org/r-doc/mgcv/s"><span style="color: #003399; font-weight: bold;">s</span></a>
+            t_1       t_2        t_3       t_4        t_5
+g_1  <span style="color: #cc66cc;">0.31052207</span> <span style="color: #cc66cc;">1.2286231</span> <span style="color: #cc66cc;">0.32985271</span> <span style="color: #cc66cc;">0.9493966</span> <span style="color: #cc66cc;">0.17752750</span>
+g_2  <span style="color: #cc66cc;">0.01499351</span> <span style="color: #cc66cc;">0.4356992</span> <span style="color: #cc66cc;">0.64952886</span> <span style="color: #cc66cc;">0.3156408</span> <span style="color: #cc66cc;">0.52470183</span>
+g_3  <span style="color: #cc66cc;">0.32074067</span> <span style="color: #cc66cc;">0.7677049</span> <span style="color: #cc66cc;">1.01268388</span> <span style="color: #cc66cc;">1.5459071</span> <span style="color: #cc66cc;">0.25603182</span>
+g_4  <span style="color: #cc66cc;">0.24481853</span> <span style="color: #cc66cc;">0.7942931</span> <span style="color: #cc66cc;">0.63619680</span> <span style="color: #cc66cc;">1.3466543</span> <span style="color: #cc66cc;">1.46118155</span>
+g_5  <span style="color: #cc66cc;">0.36278565</span> <span style="color: #cc66cc;">1.0508987</span> <span style="color: #cc66cc;">1.45768211</span> <span style="color: #cc66cc;">1.0318292</span> <span style="color: #cc66cc;">1.03621894</span>
+g_6  <span style="color: #cc66cc;">0.26995097</span> <span style="color: #cc66cc;">0.5600106</span> <span style="color: #cc66cc;">0.42226130</span> <span style="color: #cc66cc;">0.6949354</span> <span style="color: #cc66cc;">0.02697167</span>
+g_7  <span style="color: #cc66cc;">0.85073887</span> <span style="color: #cc66cc;">0.3167600</span> <span style="color: #cc66cc;">1.22780917</span> <span style="color: #cc66cc;">0.0903493</span> <span style="color: #cc66cc;">0.40295777</span>
+g_8  <span style="color: #cc66cc;">1.83079097</span> <span style="color: #cc66cc;">0.5358922</span> <span style="color: #cc66cc;">2.62261371</span> <span style="color: #cc66cc;">2.3713175</span> <span style="color: #cc66cc;">0.41908211</span>
+g_9  <span style="color: #cc66cc;">0.71790675</span> <span style="color: #cc66cc;">0.3117640</span> <span style="color: #cc66cc;">0.47852643</span> <span style="color: #cc66cc;">0.0759613</span> <span style="color: #cc66cc;">0.35894569</span>
+g_10 <span style="color: #cc66cc;">0.47540333</span> <span style="color: #cc66cc;">0.1726331</span> <span style="color: #cc66cc;">0.09013414</span> <span style="color: #cc66cc;">1.6373156</span> <span style="color: #cc66cc;">0.99456967</span></pre></div></div>
+
+    </font>
+  </div>
+
+  <div id="19_hierachical_in_R" class="step" data-x="2200" data-y="-800" data-rotate-y="150" data-scale="1">
+    <q><font color="#D55E00" size="8">Hierarchical Clustering using R</font><br></q>
+    <font size="3">
+<div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;"><span style="">&gt;</span> d <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/stats/dist"><span style="color: #003399; font-weight: bold;">dist</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/mgcv/s"><span style="color: #003399; font-weight: bold;">s</span></a><span style="color: #009900;">&#41;</span>
+<span style="">&gt;</span> d
+           g_1       g_2       g_3       g_4       g_5       g_6       g_7       g_8       g_9
+g_2  <span style="color: #cc66cc;">1.1577714</span>                                                            
+g_3  <span style="color: #cc66cc;">1.0201942</span> <span style="color: #cc66cc;">1.3861203</span>                                                  
+g_4  <span style="color: #cc66cc;">1.4465088</span> <span style="color: #cc66cc;">1.4565610</span> <span style="color: #cc66cc;">1.2807424</span>                                        
+g_5  <span style="color: #cc66cc;">1.4319437</span> <span style="color: #cc66cc;">1.3882065</span> <span style="color: #cc66cc;">1.0737588</span> <span style="color: #cc66cc;">1.0170098</span>                              
+g_6  <span style="color: #cc66cc;">0.7380010</span> <span style="color: #cc66cc;">0.7236760</span> <span style="color: #cc66cc;">1.0820983</span> <span style="color: #cc66cc;">1.6071664</span> <span style="color: #cc66cc;">1.5664492</span>                    
+g_7  <span style="color: #cc66cc;">1.6487678</span> <span style="color: #cc66cc;">1.0547999</span> <span style="color: #cc66cc;">1.6342472</span> <span style="color: #cc66cc;">1.9087489</span> <span style="color: #cc66cc;">1.4550958</span> <span style="color: #cc66cc;">1.2459064</span>          
+g_8  <span style="color: #cc66cc;">3.1824604</span> <span style="color: #cc66cc;">3.3818907</span> <span style="color: #cc66cc;">2.3735523</span> <span style="color: #cc66cc;">2.9434397</span> <span style="color: #cc66cc;">2.4397589</span> <span style="color: #cc66cc;">3.2003689</span> <span style="color: #cc66cc;">2.8560596</span>
+g_9  <span style="color: #cc66cc;">1.3507400</span> <span style="color: #cc66cc;">0.7896899</span> <span style="color: #cc66cc;">1.6799640</span> <span style="color: #cc66cc;">1.8196405</span> <span style="color: #cc66cc;">1.7330781</span> <span style="color: #cc66cc;">0.8710868</span> <span style="color: #cc66cc;">0.7623897</span> <span style="color: #cc66cc;">3.3403789</span>
+g_10 <span style="color: #cc66cc;">1.5298877</span> <span style="color: #cc66cc;">1.6005323</span> <span style="color: #cc66cc;">1.3352613</span> <span style="color: #cc66cc;">1.0198164</span> <span style="color: #cc66cc;">1.7385538</span> <span style="color: #cc66cc;">1.4583919</span> <span style="color: #cc66cc;">2.0491616</span> <span style="color: #cc66cc;">3.0417808</span> <span style="color: #cc66cc;">1.7523867</span>
+<span style="">&gt;</span> hr <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/stats/hclust"><span style="color: #003399; font-weight: bold;">hclust</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span>
+<img style="float:right" src="figures/plothr.png">
+<span style="">&gt;</span> hr
+&nbsp;
+Call<span style="">:</span>
+<a href="http://inside-r.org/r-doc/stats/hclust"><span style="color: #003399; font-weight: bold;">hclust</span></a><span style="color: #009900;">&#40;</span>d = d<span style="color: #009900;">&#41;</span>
+&nbsp;
+<a href="http://inside-r.org/r-doc/survival/cluster"><span style="">Cluster</span></a> method   <span style="">:</span> complete 
+Distance         <span style="">:</span> euclidean 
+Number of <a href="http://inside-r.org/r-doc/base/objects"><span style="color: #003399; font-weight: bold;">objects</span></a><span style="">:</span> <span style="color: #cc66cc;">10</span> 
+&nbsp;
+<span style="">&gt;</span> <a href="http://inside-r.org/r-doc/graphics/plot"><span style="color: #003399; font-weight: bold;">plot</span></a><span style="color: #009900;">&#40;</span>hr<span style="color: #009900;">&#41;</span></pre></div></div>
+</font>
+  </div>
+
+  <div id="20_measure_distance" class="step" data-x="3200" data-y="-1600" data-rotate-y="-10" data-scale="1">
+    <q><font color="#D55E00" size="8">Step 1. Identify clusters (items) with closest distance</font><br></q>
+    <p><font color="#0072B2" size="6.5">Distance measurement</font></p>
+    <q>
+      <font size="5">       
+<div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;">distance <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>x<span style="color: #339933;">,</span>y<span style="color: #339933;">,</span> method=<span style="color: #0000ff;">&quot;euclidean&quot;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <a href="http://inside-r.org/r-doc/base/switch"><span style="color: #003399; font-weight: bold;">switch</span></a><span style="color: #009900;">&#40;</span>method<span style="color: #339933;">,</span>
+           <span style="color: #0000ff;">&quot;euclidean&quot;</span> = <a href="http://inside-r.org/r-doc/base/sqrt"><span style="color: #003399; font-weight: bold;">sqrt</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/base/sum"><span style="color: #003399; font-weight: bold;">sum</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>x<span style="">-</span>y<span style="color: #009900;">&#41;</span><span style="">^</span><span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span>
+           <span style="color: #666666; font-style: italic;">## implement other methods here.</span>
+           <span style="color: #009900;">&#41;</span>
+<span style="color: #009900;">&#125;</span>
+<span style="">&gt;</span> <a href="http://inside-r.org/r-doc/mgcv/s"><span style="color: #003399; font-weight: bold;">s</span></a><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">&quot;g_1&quot;</span><span style="color: #339933;">,</span><span style="color: #009900;">&#93;</span>
+      t_1       t_2       t_3       t_4       t_5 
+<span style="color: #cc66cc;">0.3105221</span> <span style="color: #cc66cc;">1.2286231</span> <span style="color: #cc66cc;">0.3298527</span> <span style="color: #cc66cc;">0.9493966</span> <span style="color: #cc66cc;">0.1775275</span> 
+<span style="">&gt;</span> <a href="http://inside-r.org/r-doc/mgcv/s"><span style="color: #003399; font-weight: bold;">s</span></a><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">&quot;g_2&quot;</span><span style="color: #339933;">,</span><span style="color: #009900;">&#93;</span>
+       t_1        t_2        t_3        t_4        t_5 
+<span style="color: #cc66cc;">0.01499351</span> <span style="color: #cc66cc;">0.43569919</span> <span style="color: #cc66cc;">0.64952886</span> <span style="color: #cc66cc;">0.31564077</span> <span style="color: #cc66cc;">0.52470183</span> 
+<span style="">&gt;</span> distance<span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/mgcv/s"><span style="color: #003399; font-weight: bold;">s</span></a><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">&quot;g_1&quot;</span><span style="color: #339933;">,</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/mgcv/s"><span style="color: #003399; font-weight: bold;">s</span></a><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">&quot;g_2&quot;</span><span style="color: #339933;">,</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span>
+<span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span> <span style="color: #cc66cc;">1.157771</span></pre></div></div>
+      </font>
+    </q> 
+    <img style="float:middle" src="figures/euclidean.png" width="288" height="120"> 
+  </div>
+
+
+  <div id="21_measure_distance" class="step" data-x="3200" data-y="-800" data-rotate-y="-10" data-scale="1">
+    <q><font color="#D55E00" size="8">Step 1. Identify clusters (items) with closest distance</font><br></q>
+    <p><font color="#0072B2" size="6.5">Distance measurement</font></p>
+    <q>
+      <font size="5">       
+<div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;">getDistance <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>mat<span style="color: #339933;">,</span> method=<span style="color: #0000ff;">&quot;euclidean&quot;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    nr <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/nrow"><span style="color: #003399; font-weight: bold;">nrow</span></a><span style="color: #009900;">&#40;</span>mat<span style="color: #009900;">&#41;</span>
+    d <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/matrix"><span style="color: #003399; font-weight: bold;">matrix</span></a><span style="color: #009900;">&#40;</span><span style="color: #000000; font-weight: bold;">NA</span><span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/ncol"><span style="color: #003399; font-weight: bold;">ncol</span></a>=nr<span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/nrow"><span style="color: #003399; font-weight: bold;">nrow</span></a>=nr<span style="color: #009900;">&#41;</span>
+    <a href="http://inside-r.org/r-doc/base/colnames"><span style="color: #003399; font-weight: bold;">colnames</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span> <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/rownames"><span style="color: #003399; font-weight: bold;">rownames</span></a><span style="color: #009900;">&#40;</span>mat<span style="color: #009900;">&#41;</span>
+    <a href="http://inside-r.org/r-doc/base/rownames"><span style="color: #003399; font-weight: bold;">rownames</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span> <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/rownames"><span style="color: #003399; font-weight: bold;">rownames</span></a><span style="color: #009900;">&#40;</span>mat<span style="color: #009900;">&#41;</span>
+&nbsp;
+    <span style="color: #000000; font-weight: bold;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #000000; font-weight: bold;">in</span> <span style="color: #cc66cc;">1</span><span style="">:</span>nr<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+        <span style="color: #000000; font-weight: bold;">for</span> <span style="color: #009900;">&#40;</span>j <span style="color: #000000; font-weight: bold;">in</span> i<span style="">:</span>nr<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+            d<span style="color: #009900;">&#91;</span>i<span style="color: #339933;">,</span>j<span style="color: #009900;">&#93;</span> <span style="">&lt;-</span> distance<span style="color: #009900;">&#40;</span>mat<span style="color: #009900;">&#91;</span>i<span style="color: #339933;">,</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> mat<span style="color: #009900;">&#91;</span>j<span style="color: #339933;">,</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> method<span style="color: #009900;">&#41;</span>
+            <span style="color: #000000; font-weight: bold;">if</span> <span style="color: #009900;">&#40;</span>i <span style="">!</span>= j<span style="color: #009900;">&#41;</span>
+                d<span style="color: #009900;">&#91;</span>j<span style="color: #339933;">,</span>i<span style="color: #009900;">&#93;</span> <span style="">&lt;-</span> d<span style="color: #009900;">&#91;</span>i<span style="color: #339933;">,</span>j<span style="color: #009900;">&#93;</span>
+        <span style="color: #009900;">&#125;</span>
+    <span style="color: #009900;">&#125;</span>
+    <a href="http://inside-r.org/r-doc/base/return"><span style="color: #003399; font-weight: bold;">return</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span>
+<span style="color: #009900;">&#125;</span></pre></div></div>
+      </font>
+    </q> 
+  </div>
+
+
+  <div id="22_measure_distance" class="step" data-x="3200" data-y="0" data-rotate-y="-10" data-scale="1">
+    <q><font color="#D55E00" size="8">Step 1. Identify clusters (items) with closest distance</font><br></q>
+    <p><font color="#0072B2" size="6.5">Distance measurement</font></p>
+    <q>
+      <font size="3">       
+<div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;"><span style="">&gt;</span> d <span style="">&lt;-</span> getDistance<span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/mgcv/s"><span style="color: #003399; font-weight: bold;">s</span></a><span style="color: #009900;">&#41;</span>
+<span style="">&gt;</span> d
+          g_1       g_2      g_3      g_4      g_5       g_6       g_7      g_8     g_9     g_10
+g_1  <span style="color: #cc66cc;">0.000000</span> <span style="color: #cc66cc;">1.1577714</span> <span style="color: #cc66cc;">1.020194</span> <span style="color: #cc66cc;">1.446509</span> <span style="color: #cc66cc;">1.431944</span> <span style="color: #cc66cc;">0.7380010</span> <span style="color: #cc66cc;">1.6487678</span> <span style="color: #cc66cc;">3.182460</span> <span style="color: #cc66cc;">1.3507400</span> <span style="color: #cc66cc;">1.529888</span>
+g_2  <span style="color: #cc66cc;">1.157771</span> <span style="color: #cc66cc;">0.0000000</span> <span style="color: #cc66cc;">1.386120</span> <span style="color: #cc66cc;">1.456561</span> <span style="color: #cc66cc;">1.388206</span> <span style="color: #cc66cc;">0.7236760</span> <span style="color: #cc66cc;">1.0547999</span> <span style="color: #cc66cc;">3.381891</span> <span style="color: #cc66cc;">0.7896899</span> <span style="color: #cc66cc;">1.600532</span>
+g_3  <span style="color: #cc66cc;">1.020194</span> <span style="color: #cc66cc;">1.3861203</span> <span style="color: #cc66cc;">0.000000</span> <span style="color: #cc66cc;">1.280742</span> <span style="color: #cc66cc;">1.073759</span> <span style="color: #cc66cc;">1.0820983</span> <span style="color: #cc66cc;">1.6342472</span> <span style="color: #cc66cc;">2.373552</span> <span style="color: #cc66cc;">1.6799640</span> <span style="color: #cc66cc;">1.335261</span>
+g_4  <span style="color: #cc66cc;">1.446509</span> <span style="color: #cc66cc;">1.4565610</span> <span style="color: #cc66cc;">1.280742</span> <span style="color: #cc66cc;">0.000000</span> <span style="color: #cc66cc;">1.017010</span> <span style="color: #cc66cc;">1.6071664</span> <span style="color: #cc66cc;">1.9087489</span> <span style="color: #cc66cc;">2.943440</span> <span style="color: #cc66cc;">1.8196405</span> <span style="color: #cc66cc;">1.019816</span>
+g_5  <span style="color: #cc66cc;">1.431944</span> <span style="color: #cc66cc;">1.3882065</span> <span style="color: #cc66cc;">1.073759</span> <span style="color: #cc66cc;">1.017010</span> <span style="color: #cc66cc;">0.000000</span> <span style="color: #cc66cc;">1.5664492</span> <span style="color: #cc66cc;">1.4550958</span> <span style="color: #cc66cc;">2.439759</span> <span style="color: #cc66cc;">1.7330781</span> <span style="color: #cc66cc;">1.738554</span>
+g_6  <span style="color: #cc66cc;">0.738001</span> <span style="color: #cc66cc;">0.7236760</span> <span style="color: #cc66cc;">1.082098</span> <span style="color: #cc66cc;">1.607166</span> <span style="color: #cc66cc;">1.566449</span> <span style="color: #cc66cc;">0.0000000</span> <span style="color: #cc66cc;">1.2459064</span> <span style="color: #cc66cc;">3.200369</span> <span style="color: #cc66cc;">0.8710868</span> <span style="color: #cc66cc;">1.458392</span>
+g_7  <span style="color: #cc66cc;">1.648768</span> <span style="color: #cc66cc;">1.0547999</span> <span style="color: #cc66cc;">1.634247</span> <span style="color: #cc66cc;">1.908749</span> <span style="color: #cc66cc;">1.455096</span> <span style="color: #cc66cc;">1.2459064</span> <span style="color: #cc66cc;">0.0000000</span> <span style="color: #cc66cc;">2.856060</span> <span style="color: #cc66cc;">0.7623897</span> <span style="color: #cc66cc;">2.049162</span>
+g_8  <span style="color: #cc66cc;">3.182460</span> <span style="color: #cc66cc;">3.3818907</span> <span style="color: #cc66cc;">2.373552</span> <span style="color: #cc66cc;">2.943440</span> <span style="color: #cc66cc;">2.439759</span> <span style="color: #cc66cc;">3.2003689</span> <span style="color: #cc66cc;">2.8560596</span> <span style="color: #cc66cc;">0.000000</span> <span style="color: #cc66cc;">3.3403789</span> <span style="color: #cc66cc;">3.041781</span>
+g_9  <span style="color: #cc66cc;">1.350740</span> <span style="color: #cc66cc;">0.7896899</span> <span style="color: #cc66cc;">1.679964</span> <span style="color: #cc66cc;">1.819640</span> <span style="color: #cc66cc;">1.733078</span> <span style="color: #cc66cc;">0.8710868</span> <span style="color: #cc66cc;">0.7623897</span> <span style="color: #cc66cc;">3.340379</span> <span style="color: #cc66cc;">0.0000000</span> <span style="color: #cc66cc;">1.752387</span>
+g_10 <span style="color: #cc66cc;">1.529888</span> <span style="color: #cc66cc;">1.6005323</span> <span style="color: #cc66cc;">1.335261</span> <span style="color: #cc66cc;">1.019816</span> <span style="color: #cc66cc;">1.738554</span> <span style="color: #cc66cc;">1.4583919</span> <span style="color: #cc66cc;">2.0491616</span> <span style="color: #cc66cc;">3.041781</span> <span style="color: #cc66cc;">1.7523867</span> <span style="color: #cc66cc;">0.000000</span></pre></div></div>
+      </font>
+    </q> 
+  </div>
+
+
+  <div id="23_closest_nodes" class="step" data-x="3200" data-y="690" data-rotate-y="20" data-scale="1">
+    <q><font color="#D55E00" size="8">Step 1 & 2. Identify closest clusters (items) and join them to new clusters</font><br></q>
+    <q>
+      <font size="5">       
+<div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;">getClosest <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    nr <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/nrow"><span style="color: #003399; font-weight: bold;">nrow</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span>
+    h <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/min"><span style="color: #003399; font-weight: bold;">min</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#91;</span><a href="http://inside-r.org/r-doc/base/lower.tri"><span style="color: #003399; font-weight: bold;">lower.tri</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span>
+    node <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/names"><span style="color: #003399; font-weight: bold;">names</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/base/unlist"><span style="color: #003399; font-weight: bold;">unlist</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/base/sapply"><span style="color: #003399; font-weight: bold;">sapply</span></a><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">1</span><span style="">:</span>nr<span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>i<span style="color: #009900;">&#41;</span>
+                                <a href="http://inside-r.org/r-doc/base/which"><span style="color: #003399; font-weight: bold;">which</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#91;</span>i<span style="color: #339933;">,</span><span style="color: #009900;">&#93;</span> <span style="">==</span> h<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span>
+    hc <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/list"><span style="color: #003399; font-weight: bold;">list</span></a><span style="color: #009900;">&#40;</span>node=node<span style="color: #339933;">,</span> h=h<span style="color: #009900;">&#41;</span>
+    <a href="http://inside-r.org/r-doc/base/return"><span style="color: #003399; font-weight: bold;">return</span></a><span style="color: #009900;">&#40;</span>hc<span style="color: #009900;">&#41;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="">&gt;</span> getClosest<span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span>
+<span style="">$</span>node
+<span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span> <span style="color: #0000ff;">&quot;g_6&quot;</span> <span style="color: #0000ff;">&quot;g_2&quot;</span>
+&nbsp;
+<span style="">$</span>h
+<span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span> <span style="color: #cc66cc;">0.723676</span></pre></div></div>
+      </font>
+    </q> 
+  </div>
+
+  <div id="24_linkage" class="step" data-x="3200" data-y="1400" data-rotate-y="20" data-scale="1">
+    <q><font color="#D55E00" size="8">Step 3. Compute distance between clusters (items)</font><br></q>
+    <q>    
+      <font size="3.5">       
+<div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;">linkage <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #339933;">,</span> method<span style="color: #339933;">,</span> cn<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span> 
+    sc <span style="">&lt;-</span> getClosest<span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span>
+    fun <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/switch"><span style="color: #003399; font-weight: bold;">switch</span></a><span style="color: #009900;">&#40;</span>method<span style="color: #339933;">,</span>
+                  <span style="color: #0000ff;">&quot;complete&quot;</span> = <a href="http://inside-r.org/r-doc/base/max"><span style="color: #003399; font-weight: bold;">max</span></a><span style="color: #339933;">,</span>
+                  <span style="color: #0000ff;">&quot;single&quot;</span>   = <a href="http://inside-r.org/r-doc/base/min"><span style="color: #003399; font-weight: bold;">min</span></a>
+                  <span style="color: #009900;">&#41;</span>
+    node <span style="">&lt;-</span> sc<span style="">$</span>node
+    h <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/apply"><span style="color: #003399; font-weight: bold;">apply</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#91;</span>node<span style="color: #339933;">,</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #339933;">,</span> fun<span style="color: #009900;">&#41;</span>
+    h <span style="">&lt;-</span> h<span style="color: #009900;">&#91;</span><span style="">!</span> <a href="http://inside-r.org/r-doc/base/names"><span style="color: #003399; font-weight: bold;">names</span></a><span style="color: #009900;">&#40;</span>h<span style="color: #009900;">&#41;</span> <span style="">%in%</span> node<span style="color: #009900;">&#93;</span>
+    d <span style="">&lt;-</span> d<span style="color: #009900;">&#91;</span><span style="">!</span><a href="http://inside-r.org/r-doc/base/rownames"><span style="color: #003399; font-weight: bold;">rownames</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span> <span style="">%in%</span> node<span style="color: #339933;">,</span><span style="color: #009900;">&#93;</span><img style="float:right" src="figures/linkage.png" width="411" height="359">
+    <span style="color: #000000; font-weight: bold;">if</span> <span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/base/is.null"><span style="color: #003399; font-weight: bold;">is.null</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/base/dim"><span style="color: #003399; font-weight: bold;">dim</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+        nm <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/names"><span style="color: #003399; font-weight: bold;">names</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span>
+        d <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/matrix"><span style="color: #003399; font-weight: bold;">matrix</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/nrow"><span style="color: #003399; font-weight: bold;">nrow</span></a>=<span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span>
+        <a href="http://inside-r.org/r-doc/base/colnames"><span style="color: #003399; font-weight: bold;">colnames</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span> <span style="">&lt;-</span> nm
+        <a href="http://inside-r.org/r-doc/base/rownames"><span style="color: #003399; font-weight: bold;">rownames</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span> <span style="">&lt;-</span> nm<span style="color: #009900;">&#91;</span><span style="">!</span>nm <span style="">%in%</span> node<span style="color: #009900;">&#93;</span>
+    <span style="color: #009900;">&#125;</span>
+    rn <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/rownames"><span style="color: #003399; font-weight: bold;">rownames</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span>
+    d <span style="">&lt;-</span> d<span style="color: #009900;">&#91;</span><span style="color: #339933;">,</span><span style="">!</span><a href="http://inside-r.org/r-doc/base/colnames"><span style="color: #003399; font-weight: bold;">colnames</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span> <span style="">%in%</span> node<span style="color: #009900;">&#93;</span>
+    <span style="color: #000000; font-weight: bold;">if</span><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/base/is.null"><span style="color: #003399; font-weight: bold;">is.null</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/base/dim"><span style="color: #003399; font-weight: bold;">dim</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+        d <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/matrix"><span style="color: #003399; font-weight: bold;">matrix</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span>
+        <a href="http://inside-r.org/r-doc/base/rownames"><span style="color: #003399; font-weight: bold;">rownames</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span> <span style="">&lt;-</span> rn
+        <a href="http://inside-r.org/r-doc/base/colnames"><span style="color: #003399; font-weight: bold;">colnames</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span> <span style="">&lt;-</span> rn
+    <span style="color: #009900;">&#125;</span>
+    d <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/rbind"><span style="color: #003399; font-weight: bold;">rbind</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #339933;">,</span> h<span style="color: #009900;">&#41;</span>
+    d <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/cbind"><span style="color: #003399; font-weight: bold;">cbind</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #339933;">,</span> h=<a href="http://inside-r.org/r-doc/base/c"><span style="color: #003399; font-weight: bold;">c</span></a><span style="color: #009900;">&#40;</span>h<span style="color: #339933;">,</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span>
+    <a href="http://inside-r.org/r-doc/base/rownames"><span style="color: #003399; font-weight: bold;">rownames</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#91;</span><a href="http://inside-r.org/r-doc/base/rownames"><span style="color: #003399; font-weight: bold;">rownames</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span> <span style="">==</span> <span style="color: #0000ff;">&quot;h&quot;</span><span style="color: #009900;">&#93;</span> <span style="">&lt;-</span> cn
+    <a href="http://inside-r.org/r-doc/base/colnames"><span style="color: #003399; font-weight: bold;">colnames</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#91;</span><a href="http://inside-r.org/r-doc/base/colnames"><span style="color: #003399; font-weight: bold;">colnames</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span> <span style="">==</span> <span style="color: #0000ff;">&quot;h&quot;</span><span style="color: #009900;">&#93;</span> <span style="">&lt;-</span> cn
+    result <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/list"><span style="color: #003399; font-weight: bold;">list</span></a><span style="color: #009900;">&#40;</span>subCluster=sc<span style="color: #339933;">,</span> d=d<span style="color: #009900;">&#41;</span>
+    <a href="http://inside-r.org/r-doc/base/return"><span style="color: #003399; font-weight: bold;">return</span></a><span style="color: #009900;">&#40;</span>result<span style="color: #009900;">&#41;</span>
+<span style="color: #009900;">&#125;</span></pre></div></div>
+      </font>
+    </q> 
+  </div>
+
+  <div id="25_hcluster" class="step" data-x="3200" data-y="2200" data-rotate-y="20" data-scale="1">
+    <q><font color="#D55E00" size="8">Step 4. Iterate step 1-3</font><br></q>
+    <p><font color="#0072B2" size="6.5">Putting all the pieces together</font></p>    
+    <q>    
+      <font size="4">       
+<div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;">hcluster <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>mat<span style="color: #339933;">,</span>
+                     method=<span style="color: #0000ff;">&quot;complete&quot;</span><span style="color: #339933;">,</span>
+                     dist.method=<span style="color: #0000ff;">&quot;euclidean&quot;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    d <span style="">&lt;-</span> getDistance<span style="color: #009900;">&#40;</span>mat<span style="color: #339933;">,</span> dist.method<span style="color: #009900;">&#41;</span>
+    nr <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/nrow"><span style="color: #003399; font-weight: bold;">nrow</span></a><span style="color: #009900;">&#40;</span>d<span style="color: #009900;">&#41;</span>
+    cls <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/list"><span style="color: #003399; font-weight: bold;">list</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span>
+    <span style="color: #000000; font-weight: bold;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #000000; font-weight: bold;">in</span> <span style="color: #cc66cc;">1</span><span style="">:</span><span style="color: #009900;">&#40;</span>nr<span style="">-</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+        cn <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/paste"><span style="color: #003399; font-weight: bold;">paste</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;c&quot;</span><span style="color: #339933;">,</span> i<span style="color: #339933;">,</span> sep=<span style="color: #0000ff;">&quot;_&quot;</span><span style="color: #009900;">&#41;</span>
+        sc <span style="">&lt;-</span> linkage<span style="color: #009900;">&#40;</span>d<span style="color: #339933;">,</span> method<span style="color: #339933;">,</span> cn<span style="color: #009900;">&#41;</span>
+        cls<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#93;</span> <span style="">&lt;-</span> sc<span style="">$</span>subCluster
+        <a href="http://inside-r.org/r-doc/base/names"><span style="color: #003399; font-weight: bold;">names</span></a><span style="color: #009900;">&#40;</span>cls<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="">&lt;-</span> cn
+        d <span style="">&lt;-</span> sc<span style="">$</span>d
+    <span style="color: #009900;">&#125;</span>
+    result <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/list"><span style="color: #003399; font-weight: bold;">list</span></a><span style="color: #009900;">&#40;</span>clusters=cls<span style="color: #339933;">,</span>
+                   <a href="http://inside-r.org/r-doc/utils/data"><span style="color: #003399; font-weight: bold;">data</span></a>=mat<span style="color: #339933;">,</span>
+                   method=method<span style="color: #339933;">,</span>
+                   dist.method=dist.method<span style="color: #009900;">&#41;</span>
+    <a href="http://inside-r.org/r-doc/base/return"><span style="color: #003399; font-weight: bold;">return</span></a><span style="color: #009900;">&#40;</span>result<span style="color: #009900;">&#41;</span>
+<span style="color: #009900;">&#125;</span></pre></div></div>
+      </font>
+    </q> 
+  </div>
+
+  <div id="26_vis_hcluster" class="step" data-x="2200" data-y="1900" data-rotate-y="20" data-scale="1">
+    <q><font color="#D55E00" size="8">Visualizing result</font><br></q>
+    <q> <font size="2">
+ <div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;">plotting_hcluster <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>hclusterResult<span style="color: #339933;">,</span> main=<span style="color: #0000ff;">&quot;Cluster Dendrogram&quot;</span><span style="color: #339933;">,</span> xlab=<span style="color: #0000ff;">&quot;&quot;</span><span style="color: #339933;">,</span> ylab=<span style="color: #0000ff;">&quot;Height&quot;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    cls <span style="">&lt;-</span> hclusterResult<span style="">$</span>clusters
+    <a href="http://inside-r.org/r-doc/base/labels"><span style="color: #003399; font-weight: bold;">labels</span></a> <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/rownames"><span style="color: #003399; font-weight: bold;">rownames</span></a><span style="color: #009900;">&#40;</span>hclusterResult<span style="">$</span>data<span style="color: #009900;">&#41;</span>
+    tn <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/sapply"><span style="color: #003399; font-weight: bold;">sapply</span></a><span style="color: #009900;">&#40;</span>cls<span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>i<span style="color: #009900;">&#41;</span> <a href="http://inside-r.org/r-doc/base/rev"><span style="color: #003399; font-weight: bold;">rev</span></a><span style="color: #009900;">&#40;</span>i<span style="">$</span>node<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span>
+    h <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/sapply"><span style="color: #003399; font-weight: bold;">sapply</span></a><span style="color: #009900;">&#40;</span>cls<span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>i<span style="color: #009900;">&#41;</span> i<span style="">$</span>h<span style="color: #009900;">&#41;</span><img style="float:right" src="figures/plothcluster.png" width="412" height="427">
+    nl <span style="">&lt;-</span> tn<span style="color: #009900;">&#91;</span><span style="color: #339933;">,</span><a href="http://inside-r.org/r-doc/base/ncol"><span style="color: #003399; font-weight: bold;">ncol</span></a><span style="color: #009900;">&#40;</span>tn<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#93;</span>
+    idx <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/which"><span style="color: #003399; font-weight: bold;">which</span></a><span style="color: #009900;">&#40;</span><span style="">!</span> nl <span style="">%in%</span> <a href="http://inside-r.org/r-doc/base/labels"><span style="color: #003399; font-weight: bold;">labels</span></a><span style="color: #009900;">&#41;</span>
+    <span style="color: #000000; font-weight: bold;">while</span><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/base/length"><span style="color: #003399; font-weight: bold;">length</span></a><span style="color: #009900;">&#40;</span>idx<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+        i <span style="">&lt;-</span> idx<span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span>
+        <span style="color: #000000; font-weight: bold;">if</span> <span style="color: #009900;">&#40;</span>i <span style="">&gt;</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+            <a href="http://inside-r.org/r-doc/stats/start"><span style="color: #003399; font-weight: bold;">start</span></a> <span style="">&lt;-</span> nl<span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="">:</span><span style="color: #009900;">&#40;</span>i<span style="">-</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#93;</span>
+        <span style="color: #009900;">&#125;</span> <span style="color: #000000; font-weight: bold;">else</span> <span style="color: #009900;">&#123;</span>
+            <a href="http://inside-r.org/r-doc/stats/start"><span style="color: #003399; font-weight: bold;">start</span></a> <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/c"><span style="color: #003399; font-weight: bold;">c</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span>
+        <span style="color: #009900;">&#125;</span>
+        <span style="color: #000000; font-weight: bold;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>i<span style="">+</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span> <span style="">&lt;=</span> <a href="http://inside-r.org/r-doc/base/length"><span style="color: #003399; font-weight: bold;">length</span></a><span style="color: #009900;">&#40;</span>nl<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+            <a href="http://inside-r.org/r-doc/stats/end"><span style="color: #003399; font-weight: bold;">end</span></a> <span style="">&lt;-</span> nl<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#40;</span>i<span style="">+</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="">:</span><a href="http://inside-r.org/r-doc/base/length"><span style="color: #003399; font-weight: bold;">length</span></a><span style="color: #009900;">&#40;</span>nl<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#93;</span>
+        <span style="color: #009900;">&#125;</span> <span style="color: #000000; font-weight: bold;">else</span> <span style="color: #009900;">&#123;</span>
+            <a href="http://inside-r.org/r-doc/stats/end"><span style="color: #003399; font-weight: bold;">end</span></a> <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/c"><span style="color: #003399; font-weight: bold;">c</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span>
+        <span style="color: #009900;">&#125;</span>
+        nl <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/c"><span style="color: #003399; font-weight: bold;">c</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/stats/start"><span style="color: #003399; font-weight: bold;">start</span></a><span style="color: #339933;">,</span> tn<span style="color: #009900;">&#91;</span><span style="color: #339933;">,</span> nl<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/stats/end"><span style="color: #003399; font-weight: bold;">end</span></a><span style="color: #009900;">&#41;</span>
+        idx <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/which"><span style="color: #003399; font-weight: bold;">which</span></a><span style="color: #009900;">&#40;</span><span style="">!</span> nl <span style="">%in%</span> <a href="http://inside-r.org/r-doc/base/labels"><span style="color: #003399; font-weight: bold;">labels</span></a><span style="color: #009900;">&#41;</span>
+    <span style="color: #009900;">&#125;</span>
+&nbsp;
+    ord <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/sapply"><span style="color: #003399; font-weight: bold;">sapply</span></a><span style="color: #009900;">&#40;</span>nl<span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>i<span style="color: #009900;">&#41;</span> <a href="http://inside-r.org/r-doc/base/which"><span style="color: #003399; font-weight: bold;">which</span></a><span style="color: #009900;">&#40;</span>i <span style="">==</span> <a href="http://inside-r.org/r-doc/base/labels"><span style="color: #003399; font-weight: bold;">labels</span></a><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span>
+&nbsp;
+    m <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/t"><span style="color: #003399; font-weight: bold;">t</span></a><span style="color: #009900;">&#40;</span>tn<span style="color: #009900;">&#41;</span>
+    nidx <span style="">&lt;-</span> m <span style="">%in%</span> <a href="http://inside-r.org/r-doc/base/labels"><span style="color: #003399; font-weight: bold;">labels</span></a>
+    m<span style="color: #009900;">&#91;</span>nidx<span style="color: #009900;">&#93;</span> <span style="">&lt;-</span> <span style="">-</span><a href="http://inside-r.org/r-doc/base/sapply"><span style="color: #003399; font-weight: bold;">sapply</span></a><span style="color: #009900;">&#40;</span>m<span style="color: #009900;">&#91;</span>nidx<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>i<span style="color: #009900;">&#41;</span> <a href="http://inside-r.org/r-doc/base/which"><span style="color: #003399; font-weight: bold;">which</span></a><span style="color: #009900;">&#40;</span>i<span style="">==</span> <a href="http://inside-r.org/r-doc/base/labels"><span style="color: #003399; font-weight: bold;">labels</span></a><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span>
+    m<span style="color: #009900;">&#91;</span><span style="">!</span>nidx<span style="color: #009900;">&#93;</span> <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/sapply"><span style="color: #003399; font-weight: bold;">sapply</span></a><span style="color: #009900;">&#40;</span>m<span style="color: #009900;">&#91;</span><span style="">!</span>nidx<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>i<span style="color: #009900;">&#41;</span> <a href="http://inside-r.org/r-doc/base/unlist"><span style="color: #003399; font-weight: bold;">unlist</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/base/strsplit"><span style="color: #003399; font-weight: bold;">strsplit</span></a><span style="color: #009900;">&#40;</span>i<span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;_&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">2</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span>
+    m <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/matrix"><span style="color: #003399; font-weight: bold;">matrix</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/base/as.numeric"><span style="color: #003399; font-weight: bold;">as.numeric</span></a><span style="color: #009900;">&#40;</span>m<span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/ncol"><span style="color: #003399; font-weight: bold;">ncol</span></a>=<span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span>
+&nbsp;
+    hr <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/list"><span style="color: #003399; font-weight: bold;">list</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/base/merge"><span style="color: #003399; font-weight: bold;">merge</span></a>=m<span style="color: #339933;">,</span>
+               height=<a href="http://inside-r.org/r-doc/base/as.double"><span style="color: #003399; font-weight: bold;">as.double</span></a><span style="color: #009900;">&#40;</span>h<span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+               <a href="http://inside-r.org/r-doc/base/order"><span style="color: #003399; font-weight: bold;">order</span></a>=ord<span style="color: #339933;">,</span>
+               <a href="http://inside-r.org/r-doc/base/labels"><span style="color: #003399; font-weight: bold;">labels</span></a>=<a href="http://inside-r.org/r-doc/base/labels"><span style="color: #003399; font-weight: bold;">labels</span></a><span style="color: #339933;">,</span>
+               method=hclusterResult<span style="">$</span>method
+               <span style="color: #009900;">&#41;</span>
+    <a href="http://inside-r.org/r-doc/stats"><span style="color: #006600; font-weight: bold;">stats</span></a><span style="">:::</span>plot.hclust<span style="color: #009900;">&#40;</span>hr<span style="color: #339933;">,</span> main=main<span style="color: #339933;">,</span> xlab=xlab<span style="color: #339933;">,</span> ylab=ylab<span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/sub"><span style="color: #003399; font-weight: bold;">sub</span></a>=<span style="color: #0000ff;">&quot;&quot;</span><span style="color: #009900;">&#41;</span>
+<span style="color: #009900;">&#125;</span></pre></div></div>
+      </font>
+    </q> 
+  </div>
+
+
+  <div id="27_after_class" class="step" data-x="1300" data-y="2000" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00" size="8">To do list after this class</font><br></q>
+    <p><font size="6"><font color="#0072B2">1.</font> Review slides.<br>
+      <font color="#0072B2">2.</font> Implement other distance methods including<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Manhattan, Chebychev and correlation-based methods<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in <font color="red"><em>distance</em></font> function. <br>
+      <font color="#0072B2">3.</font> Implement average method in <font color="red"><em>linkage</em></font> function.<br>
+      <font color="#0072B2">4.</font> Explore the output of <font color="red"><em>hcluster</em></font> function.<br>
+    </font></p> 
+  </div>
+
+  <div id="28_kmeans" class="step" data-x="450" data-y="2200" data-rotate-y="10" data-scale="1">
+    <q><font color="#D55E00" size="8">K-means clustering analysis</font><br></q>
+    <q><font color="#0072B2" size="6">The most popular partitioning method.<br></font></q>
+    <p><font size="5">
+      The intuition behind K-means is an iterative procedure that starts by guessing the initial c entroids, and then refines this guess by repeatedly assigning examples to their closest centroids and then recomputing the centroids based on the assignments.</font>
+      </p> <img style="float:middle" src="figures/mlass_kmeans.png" width="380" height="393">
+  </div>
+
+  <div id="29_kmeans_iris" class="step" data-x="-600" data-y="2300" data-rotate-y="30" data-scale="1">
+    <q><font color="#D55E00" size="8">K-means clustering analysis</font><br></q>
+    <q><font color="#0072B2" size="6">Iris flower data set.<br></font></q>
+    <p><font size="5">
+      Read wikipedia page for more details: <a href="http://en.wikipedia.org/wiki/Iris_flower_data_set">http://en.wikipedia.org/wiki/Iris_flower_data_set</a></font>
+      </p> <img style="float:middle" src="figures/wiki_iris.png" width="618" height="500">
+  </div>
+
+  <div id="30_iris_scatterplot" class="step" data-x="-1400" data-y="2300" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00" size="8">K-means clustering analysis</font><br></q>
+    <q><font color="#0072B2" size="6">Scatterplot of iris flower data set.<br></font></q>
+    <q><font size="4">
+<div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;"><span style="">&gt;</span> <a href="http://inside-r.org/r-doc/utils/data"><span style="color: #003399; font-weight: bold;">data</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/datasets/iris"><span style="color: #003399; font-weight: bold;">iris</span></a><span style="color: #009900;">&#41;</span>
+<span style="">&gt;</span> <a href="http://inside-r.org/r-doc/utils/head"><span style="color: #003399; font-weight: bold;">head</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/datasets/iris"><span style="color: #003399; font-weight: bold;">iris</span></a><span style="color: #009900;">&#41;</span>
+  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+<span style="color: #cc66cc;">1</span>          <span style="color: #cc66cc;">5.1</span>         <span style="color: #cc66cc;">3.5</span>          <span style="color: #cc66cc;">1.4</span>         <span style="color: #cc66cc;">0.2</span>  setosa
+<span style="color: #cc66cc;">2</span>          <span style="color: #cc66cc;">4.9</span>         <span style="color: #cc66cc;">3.0</span>          <span style="color: #cc66cc;">1.4</span>         <span style="color: #cc66cc;">0.2</span>  setosa
+<span style="color: #cc66cc;">3</span>          <span style="color: #cc66cc;">4.7</span>         <span style="color: #cc66cc;">3.2</span>          <span style="color: #cc66cc;">1.3</span>         <span style="color: #cc66cc;">0.2</span>  setosa
+<span style="color: #cc66cc;">4</span>          <span style="color: #cc66cc;">4.6</span>         <span style="color: #cc66cc;">3.1</span>          <span style="color: #cc66cc;">1.5</span>         <span style="color: #cc66cc;">0.2</span>  setosa
+<span style="color: #cc66cc;">5</span>          <span style="color: #cc66cc;">5.0</span>         <span style="color: #cc66cc;">3.6</span>          <span style="color: #cc66cc;">1.4</span>         <span style="color: #cc66cc;">0.2</span>  setosa
+<span style="color: #cc66cc;">6</span>          <span style="color: #cc66cc;">5.4</span>         <span style="color: #cc66cc;">3.9</span>          <span style="color: #cc66cc;">1.7</span>         <span style="color: #cc66cc;">0.4</span>  setosa
+<span style="">&gt;</span> <a href="http://inside-r.org/r-doc/base/col"><span style="color: #003399; font-weight: bold;">col</span></a> <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/c"><span style="color: #003399; font-weight: bold;">c</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;red&quot;</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;green&quot;</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;blue&quot;</span><span style="color: #009900;">&#41;</span>
+<span style="">&gt;</span> <a href="http://inside-r.org/r-doc/graphics/plot"><span style="color: #003399; font-weight: bold;">plot</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/datasets/iris"><span style="color: #003399; font-weight: bold;">iris</span></a><span style="color: #009900;">&#91;</span><span style="color: #339933;">,</span><span style="">-</span><span style="color: #cc66cc;">5</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/col"><span style="color: #003399; font-weight: bold;">col</span></a>=<a href="http://inside-r.org/r-doc/base/col"><span style="color: #003399; font-weight: bold;">col</span></a><span style="color: #009900;">&#91;</span><a href="http://inside-r.org/r-doc/base/factor"><span style="color: #003399; font-weight: bold;">factor</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/datasets/iris"><span style="color: #003399; font-weight: bold;">iris</span></a><span style="color: #009900;">&#91;</span><span style="color: #339933;">,</span><span style="color: #cc66cc;">5</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span></pre></div></div>
+      </font></q> 
+      <img style="float:middle" src="figures/iris.png" width="360" height="365">
+  </div>
+
+  <div id="31_kmeans_in_R" class="step" data-x="-2250" data-y="2300" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00" size="8">K-means clustering analysis</font><br></q>
+    <q><font color="#0072B2" size="6">K-means clustering using R<br></font></q>
+    <q><font size="4">
+      <div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;"><span style="">&gt;</span> res <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/stats/kmeans"><span style="color: #003399; font-weight: bold;">kmeans</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/datasets/iris"><span style="color: #003399; font-weight: bold;">iris</span></a><span style="color: #009900;">&#91;</span><span style="color: #339933;">,</span><span style="">-</span><span style="color: #cc66cc;">5</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> centers=<span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span>
+<span style="">&gt;</span> res
+K<span style="">-</span>means clustering <a href="http://inside-r.org/r-doc/base/with"><span style="color: #003399; font-weight: bold;">with</span></a> <span style="color: #cc66cc;">3</span> clusters of sizes <span style="color: #cc66cc;">50</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">38</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">62</span>
+&nbsp;
+<a href="http://inside-r.org/r-doc/survival/cluster"><span style="">Cluster</span></a> means<span style="">:</span>
+  Sepal.Length Sepal.Width Petal.Length Petal.Width
+<span style="color: #cc66cc;">1</span>     <span style="color: #cc66cc;">5.006000</span>    <span style="color: #cc66cc;">3.428000</span>     <span style="color: #cc66cc;">1.462000</span>    <span style="color: #cc66cc;">0.246000</span>
+<span style="color: #cc66cc;">2</span>     <span style="color: #cc66cc;">6.850000</span>    <span style="color: #cc66cc;">3.073684</span>     <span style="color: #cc66cc;">5.742105</span>    <span style="color: #cc66cc;">2.071053</span>
+<span style="color: #cc66cc;">3</span>     <span style="color: #cc66cc;">5.901613</span>    <span style="color: #cc66cc;">2.748387</span>     <span style="color: #cc66cc;">4.393548</span>    <span style="color: #cc66cc;">1.433871</span>
+&nbsp;
+Clustering <a href="http://inside-r.org/r-doc/base/vector"><span style="color: #003399; font-weight: bold;">vector</span></a><span style="">:</span>
+  <span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span>
+ <span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">38</span><span style="color: #009900;">&#93;</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span>
+ <span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">75</span><span style="color: #009900;">&#93;</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span>
+<span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">112</span><span style="color: #009900;">&#93;</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span>
+<span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">149</span><span style="color: #009900;">&#93;</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span>
+&nbsp;
+Within <a href="http://inside-r.org/r-doc/survival/cluster"><span style="">cluster</span></a> <a href="http://inside-r.org/r-doc/base/sum"><span style="color: #003399; font-weight: bold;">sum</span></a> of squares <a href="http://inside-r.org/r-doc/base/by"><span style="color: #003399; font-weight: bold;">by</span></a> <a href="http://inside-r.org/r-doc/survival/cluster"><span style="">cluster</span></a><span style="">:</span>
+<span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span> <span style="color: #cc66cc;">15.15100</span> <span style="color: #cc66cc;">23.87947</span> <span style="color: #cc66cc;">39.82097</span>
+ <span style="color: #009900;">&#40;</span>between_SS <span style="">/</span> total_SS =  <span style="color: #cc66cc;">88.4</span> %<span style="color: #009900;">&#41;</span>
+&nbsp;
+Available components<span style="">:</span>
+&nbsp;
+<span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span> <span style="color: #0000ff;">&quot;cluster&quot;</span>      <span style="color: #0000ff;">&quot;centers&quot;</span>      <span style="color: #0000ff;">&quot;totss&quot;</span>        <span style="color: #0000ff;">&quot;withinss&quot;</span>     <span style="color: #0000ff;">&quot;tot.withinss&quot;</span>
+<span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">6</span><span style="color: #009900;">&#93;</span> <span style="color: #0000ff;">&quot;betweenss&quot;</span>    <span style="color: #0000ff;">&quot;size&quot;</span>      </pre></div></div>
+    </font></q>
+  </div>
+
+  <div id="32_kmeans_in_mlass" class="step" data-x="-3100" data-y="2300" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00" size="8">K-means clustering analysis</font><br></q>
+    <q><font color="#0072B2" size="7">mlass package<br></font>
+      <font size="5">Implemented the following algorithms:<br>
+        1. Linear Regression<br>
+        2. Logistic Regression<br>
+        3. Regularization for preventing overfitting<br>
+        4. Support Vector Machines<br>
+        5. K-means<br>
+        Source code is available at: <a href="https://github.com/GuangchuangYu/mlass">https://github.com/GuangchuangYu/mlass</a>
+      </font>
+    </q>
+  </div>
+
+  <div id="33_kmeans_in_mlass" class="step" data-x="-2800" data-y="1500" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00" size="8">K-means clustering analysis</font><br></q>
+    <q><font color="#0072B2" size="7">mlass package<br></font>
+      <font size="5">Implemented the following algorithms:<br>
+<div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;"><span style="">&gt;</span> <a href="http://inside-r.org/r-doc/base/require"><span style="color: #003399; font-weight: bold;">require</span></a><span style="color: #009900;">&#40;</span>mlass<span style="color: #009900;">&#41;</span>
+<span style="">&gt;</span> res <span style="">&lt;-</span> kMeans<span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/datasets/iris"><span style="color: #003399; font-weight: bold;">iris</span></a><span style="color: #009900;">&#91;</span><span style="color: #339933;">,</span><span style="">-</span><span style="color: #cc66cc;">5</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> centers=<span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span>
+<span style="">&gt;</span> <a href="http://inside-r.org/r-doc/graphics/plot"><span style="color: #003399; font-weight: bold;">plot</span></a><span style="color: #009900;">&#40;</span>res<span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/trace"><span style="color: #003399; font-weight: bold;">trace</span></a>=T<span style="color: #009900;">&#41;</span></pre></div></div>
+      </font>
+    </q><img style="float:right" src="figures/mlass_iris.png" width="527" height="550">
+  </div>
+
+
+   <div id="34_implementing_kmeans" class="step" data-x="-2800" data-y="600" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00" size="8">K-means clustering step</font><br></q>
+    <q><font size="6">
+      <font color="#0072B2">Step 1.</font> Initialize centroids.<br>
+      <font color="#0072B2">Step 2.</font> Assign each data point to the closest centroid.<br>
+      <font color="#0072B2">Step 3.</font> Recomputing the centroids based on the assignments.<br>
+      <font color="#0072B2">Step 4.</font> Return to Step 2.<br><br>
+      A simple version of kMeans provided in mlass package will be developed to illustrate how this algorithm works.
+      </font></q>
+  </div>
+ 
+   <div id="35_implementing_kmeans" class="step" data-x="-3000" data-y="-200" data-rotate-y="15" data-scale="1">
+    <q><font color="#D55E00" size="8">Step 1. Initialize centroids.</font><br></q>
+    <q><font size="5">
+<div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;">kMeansInitCentroids <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>X<span style="color: #339933;">,</span> K<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    rand.idx <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/sample"><span style="color: #003399; font-weight: bold;">sample</span></a><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">1</span><span style="">:</span><a href="http://inside-r.org/r-doc/base/nrow"><span style="color: #003399; font-weight: bold;">nrow</span></a><span style="color: #009900;">&#40;</span>X<span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> K<span style="color: #009900;">&#41;</span>
+    centroids <span style="">&lt;-</span> X<span style="color: #009900;">&#91;</span>rand.idx<span style="color: #339933;">,</span><span style="color: #009900;">&#93;</span>
+    <a href="http://inside-r.org/r-doc/base/return"><span style="color: #003399; font-weight: bold;">return</span></a><span style="color: #009900;">&#40;</span>centroids<span style="color: #009900;">&#41;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="">&gt;</span> kMeansInitCentroids<span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/datasets/iris"><span style="color: #003399; font-weight: bold;">iris</span></a><span style="color: #009900;">&#91;</span><span style="color: #339933;">,</span><span style="">-</span><span style="color: #cc66cc;">5</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span><span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span>
+    Sepal.Length Sepal.Width Petal.Length Petal.Width
+<span style="color: #cc66cc;">139</span>          <span style="color: #cc66cc;">6.0</span>         <span style="color: #cc66cc;">3.0</span>          <span style="color: #cc66cc;">4.8</span>         <span style="color: #cc66cc;">1.8</span>
+<span style="color: #cc66cc;">19</span>           <span style="color: #cc66cc;">5.7</span>         <span style="color: #cc66cc;">3.8</span>          <span style="color: #cc66cc;">1.7</span>         <span style="color: #cc66cc;">0.3</span>
+<span style="color: #cc66cc;">11</span>           <span style="color: #cc66cc;">5.4</span>         <span style="color: #cc66cc;">3.7</span>          <span style="color: #cc66cc;">1.5</span>         <span style="color: #cc66cc;">0.2</span>
+<span style="">&gt;</span> kMeansInitCentroids<span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/datasets/iris"><span style="color: #003399; font-weight: bold;">iris</span></a><span style="color: #009900;">&#91;</span><span style="color: #339933;">,</span><span style="">-</span><span style="color: #cc66cc;">5</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span><span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span>
+    Sepal.Length Sepal.Width Petal.Length Petal.Width
+<span style="color: #cc66cc;">134</span>          <span style="color: #cc66cc;">6.3</span>         <span style="color: #cc66cc;">2.8</span>          <span style="color: #cc66cc;">5.1</span>         <span style="color: #cc66cc;">1.5</span>
+<span style="color: #cc66cc;">124</span>          <span style="color: #cc66cc;">6.3</span>         <span style="color: #cc66cc;">2.7</span>          <span style="color: #cc66cc;">4.9</span>         <span style="color: #cc66cc;">1.8</span>
+<span style="color: #cc66cc;">142</span>          <span style="color: #cc66cc;">6.9</span>         <span style="color: #cc66cc;">3.1</span>          <span style="color: #cc66cc;">5.1</span>         <span style="color: #cc66cc;">2.3</span></pre></div></div>
+      </font></q>
+  </div>
+
+
+   <div id="36_implementing_kmeans" class="step" data-x="-3200" data-y="-1000" data-rotate-y="45" data-scale="1">
+    <q><font color="#D55E00" size="8">Step 2. Assign each data point to the closest centroid.<br></font></q>
+    <q><font size="4">
+<div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;">findClosestCentroids <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>X<span style="color: #339933;">,</span> centroids<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    K <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/nrow"><span style="color: #003399; font-weight: bold;">nrow</span></a><span style="color: #009900;">&#40;</span>centroids<span style="color: #009900;">&#41;</span>
+    idx <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/sapply"><span style="color: #003399; font-weight: bold;">sapply</span></a><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">1</span><span style="">:</span><a href="http://inside-r.org/r-doc/base/nrow"><span style="color: #003399; font-weight: bold;">nrow</span></a><span style="color: #009900;">&#40;</span>X<span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>i<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+        <a href="http://inside-r.org/r-doc/base/which.min"><span style="color: #003399; font-weight: bold;">which.min</span></a><span style="color: #009900;">&#40;</span>
+                  <a href="http://inside-r.org/r-doc/base/sapply"><span style="color: #003399; font-weight: bold;">sapply</span></a><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">1</span><span style="">:</span>K<span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>j<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+                      <a href="http://inside-r.org/r-doc/base/sum"><span style="color: #003399; font-weight: bold;">sum</span></a><span style="color: #009900;">&#40;</span>
+                          <span style="color: #009900;">&#40;</span>X<span style="color: #009900;">&#91;</span>i<span style="color: #339933;">,</span><span style="color: #009900;">&#93;</span><span style="">-</span>centroids<span style="color: #009900;">&#91;</span>j<span style="color: #339933;">,</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="">^</span><span style="color: #cc66cc;">2</span>
+                          <span style="color: #009900;">&#41;</span>
+                  <span style="color: #009900;">&#125;</span><span style="color: #009900;">&#41;</span>
+                  <span style="color: #009900;">&#41;</span>
+    <span style="color: #009900;">&#125;</span><span style="color: #009900;">&#41;</span>
+    <a href="http://inside-r.org/r-doc/base/return"><span style="color: #003399; font-weight: bold;">return</span></a><span style="color: #009900;">&#40;</span>idx<span style="color: #009900;">&#41;</span>
+<span style="color: #009900;">&#125;</span>
+<span style="">&gt;</span> centroids <span style="">&lt;-</span> kMeansInitCentroids<span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/datasets/iris"><span style="color: #003399; font-weight: bold;">iris</span></a><span style="color: #009900;">&#91;</span><span style="color: #339933;">,</span><span style="">-</span><span style="color: #cc66cc;">5</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span><span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span>
+<span style="">&gt;</span> centroids
+    Sepal.Length Sepal.Width Petal.Length Petal.Width
+<span style="color: #cc66cc;">138</span>          <span style="color: #cc66cc;">6.4</span>         <span style="color: #cc66cc;">3.1</span>          <span style="color: #cc66cc;">5.5</span>         <span style="color: #cc66cc;">1.8</span>
+<span style="color: #cc66cc;">35</span>           <span style="color: #cc66cc;">4.9</span>         <span style="color: #cc66cc;">3.1</span>          <span style="color: #cc66cc;">1.5</span>         <span style="color: #cc66cc;">0.2</span>
+<span style="color: #cc66cc;">8</span>            <span style="color: #cc66cc;">5.0</span>         <span style="color: #cc66cc;">3.4</span>          <span style="color: #cc66cc;">1.5</span>         <span style="color: #cc66cc;">0.2</span>
+<span style="">&gt;</span> idx <span style="">&lt;-</span> findClosestCentroids<span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/datasets/iris"><span style="color: #003399; font-weight: bold;">iris</span></a><span style="color: #009900;">&#91;</span><span style="color: #339933;">,</span><span style="">-</span><span style="color: #cc66cc;">5</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> centroids<span style="color: #009900;">&#41;</span>
+<span style="">&gt;</span> idx
+  <span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span>
+ <span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">38</span><span style="color: #009900;">&#93;</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span>
+ <span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">75</span><span style="color: #009900;">&#93;</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span>
+<span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">112</span><span style="color: #009900;">&#93;</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span>
+<span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">149</span><span style="color: #009900;">&#93;</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span></pre></div></div></font></q>
+  </div>
+
+
+   <div id="37_implementing_kmeans" class="step" data-x="-2800" data-y="-1800" data-rotate-y="45" data-scale="1">
+    <q><font color="#D55E00" size="8">Step 3. Recomputing the centroids based on the assignments.</font><br></q>
+    <q><font size="5">
+<div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;">computeCentroids <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>X<span style="color: #339933;">,</span> idx<span style="color: #339933;">,</span> K<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    centroids <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/sapply"><span style="color: #003399; font-weight: bold;">sapply</span></a><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">1</span><span style="">:</span>K<span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>i<span style="color: #009900;">&#41;</span>
+                        <a href="http://inside-r.org/r-doc/base/colMeans"><span style="color: #003399; font-weight: bold;">colMeans</span></a><span style="color: #009900;">&#40;</span>X<span style="color: #009900;">&#91;</span>idx <span style="">==</span> i<span style="color: #339933;">,</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span>
+    centroids <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/t"><span style="color: #003399; font-weight: bold;">t</span></a><span style="color: #009900;">&#40;</span>centroids<span style="color: #009900;">&#41;</span>
+    <a href="http://inside-r.org/r-doc/base/return"><span style="color: #003399; font-weight: bold;">return</span></a><span style="color: #009900;">&#40;</span>centroids<span style="color: #009900;">&#41;</span>
+<span style="color: #009900;">&#125;</span>
+<span style="">&gt;</span> computeCentroids<span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/datasets/iris"><span style="color: #003399; font-weight: bold;">iris</span></a><span style="color: #009900;">&#91;</span><span style="color: #339933;">,</span><span style="">-</span><span style="color: #cc66cc;">5</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> idx<span style="color: #339933;">,</span> <span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span>
+     Sepal.Length Sepal.Width Petal.Length Petal.Width
+<span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #339933;">,</span><span style="color: #009900;">&#93;</span>     <span style="color: #cc66cc;">6.314583</span>    <span style="color: #cc66cc;">2.895833</span>     <span style="color: #cc66cc;">4.973958</span>   <span style="color: #cc66cc;">1.7031250</span>
+<span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">2</span><span style="color: #339933;">,</span><span style="color: #009900;">&#93;</span>     <span style="color: #cc66cc;">4.747619</span>    <span style="color: #cc66cc;">2.895238</span>     <span style="color: #cc66cc;">1.757143</span>   <span style="color: #cc66cc;">0.3523810</span>
+<span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">3</span><span style="color: #339933;">,</span><span style="color: #009900;">&#93;</span>     <span style="color: #cc66cc;">5.169697</span>    <span style="color: #cc66cc;">3.630303</span>     <span style="color: #cc66cc;">1.493939</span>   <span style="color: #cc66cc;">0.2727273</span></pre></div></div>
+      </font></q>
+  </div>
+
+   <div id="38_implementing_kmeans" class="step" data-x="-2800" data-y="-2450" data-rotate-y="40" data-scale="1">
+    <q><font color="#D55E00" size="8">K-means clustering step</font><br></q>
+    <q><font size="4">
+<div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;">kMeans <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/function"><span style="color: #003399; font-weight: bold;">function</span></a><span style="color: #009900;">&#40;</span>X<span style="color: #339933;">,</span> centers<span style="color: #339933;">,</span> max.iter = <span style="color: #cc66cc;">10</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#123;</span>
+    X <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/as.matrix"><span style="color: #003399; font-weight: bold;">as.matrix</span></a><span style="color: #009900;">&#40;</span>X<span style="color: #009900;">&#41;</span>
+    <span style="color: #000000; font-weight: bold;">if</span><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/base/length"><span style="color: #003399; font-weight: bold;">length</span></a><span style="color: #009900;">&#40;</span>centers<span style="color: #009900;">&#41;</span> <span style="">==</span> <span style="color: #cc66cc;">1L</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+        K <span style="">&lt;-</span> centers
+        initCentroids <span style="">&lt;-</span> kMeansInitCentroids<span style="color: #009900;">&#40;</span>X<span style="color: #339933;">,</span> K<span style="color: #009900;">&#41;</span>
+    <span style="color: #009900;">&#125;</span> <span style="color: #000000; font-weight: bold;">else</span> <span style="color: #009900;">&#123;</span>
+        initCentroids <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/as.matrix"><span style="color: #003399; font-weight: bold;">as.matrix</span></a><span style="color: #009900;">&#40;</span>centers<span style="color: #009900;">&#41;</span>
+    <span style="color: #009900;">&#125;</span>
+    K <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/base/nrow"><span style="color: #003399; font-weight: bold;">nrow</span></a><span style="color: #009900;">&#40;</span>initCentroids<span style="color: #009900;">&#41;</span>
+    centroids <span style="">&lt;-</span> initCentroids
+    preCentroids <span style="">&lt;-</span> centroids
+    <span style="color: #000000; font-weight: bold;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #000000; font-weight: bold;">in</span> <span style="color: #cc66cc;">1</span><span style="">:</span>max.iter<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+        idx <span style="">&lt;-</span> findClosestCentroids<span style="color: #009900;">&#40;</span>X<span style="color: #339933;">,</span> centroids<span style="color: #009900;">&#41;</span>
+        centroids <span style="">&lt;-</span> computeCentroids<span style="color: #009900;">&#40;</span>X<span style="color: #339933;">,</span> idx<span style="color: #339933;">,</span> K<span style="color: #009900;">&#41;</span>
+    <span style="color: #009900;">&#125;</span>
+    <a href="http://inside-r.org/r-doc/base/return"><span style="color: #003399; font-weight: bold;">return</span></a><span style="color: #009900;">&#40;</span>idx<span style="color: #009900;">&#41;</span>
+<span style="color: #009900;">&#125;</span>
+<span style="">&gt;</span> kMeans<span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/datasets/iris"><span style="color: #003399; font-weight: bold;">iris</span></a><span style="color: #009900;">&#91;</span><span style="color: #339933;">,</span><span style="">-</span><span style="color: #cc66cc;">5</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> centers=<span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span>
+  <span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span>
+ <span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">38</span><span style="color: #009900;">&#93;</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">1</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span>
+ <span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">75</span><span style="color: #009900;">&#93;</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span>
+<span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">112</span><span style="color: #009900;">&#93;</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span> <span style="color: #cc66cc;">3</span>
+<span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">149</span><span style="color: #009900;">&#93;</span> <span style="color: #cc66cc;">3</span> <span style="color: #cc66cc;">2</span></pre></div></div>
+      </font></q>
+  </div>
+
+   <div id="39_implementing_kmeans" class="step" data-x="-1700" data-y="-2200" data-rotate-y="25" data-scale="1">
+    <q><font color="#D55E00" size="8">K-means clustering</font><br></q>
+    <img src="figures/iris_1.png" width="380" height="380"><img src="figures/iris_2.png" width="380" height="380">
+  </div>
+
+   <div id="40_data_set" class="step" data-x="-800" data-y="-2300" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00" size="8">Gene Clustering</font><br></q>
+    <q><font size="5">
+      <font color="#0072B2">Dataset</font> publicly available expression dataset of breast tumour tissues from 200 patients (GSE11121, Gene Expression Omnibus).<br></font></q>
+      <q><font size="4">
+<div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;"><a href="http://inside-r.org/r-doc/base/require"><span style="color: #003399; font-weight: bold;">require</span></a><span style="color: #009900;">&#40;</span>breastCancerMAINZ<span style="color: #009900;">&#41;</span>
+<a href="http://inside-r.org/r-doc/utils/data"><span style="color: #003399; font-weight: bold;">data</span></a><span style="color: #009900;">&#40;</span>mainz<span style="color: #009900;">&#41;</span>
+mainz.mat <span style="">&lt;-</span> Biobase<span style="">::</span>exprs<span style="color: #009900;">&#40;</span>mainz<span style="color: #009900;">&#41;</span>
+samp <span style="">&lt;-</span> mainz.mat<span style="color: #009900;">&#91;</span><a href="http://inside-r.org/r-doc/base/sample"><span style="color: #003399; font-weight: bold;">sample</span></a><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">1</span><span style="">:</span><a href="http://inside-r.org/r-doc/base/nrow"><span style="color: #003399; font-weight: bold;">nrow</span></a><span style="color: #009900;">&#40;</span>mainz<span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">100</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/sample"><span style="color: #003399; font-weight: bold;">sample</span></a><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">1</span><span style="">:</span><a href="http://inside-r.org/r-doc/base/ncol"><span style="color: #003399; font-weight: bold;">ncol</span></a><span style="color: #009900;">&#40;</span>mainz<span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">20</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#93;</span>
+<a href="http://inside-r.org/r-doc/base/require"><span style="color: #003399; font-weight: bold;">require</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/packages/cran/RColorBrewer"><span style="">RColorBrewer</span></a><span style="color: #009900;">&#41;</span>
+<a href="http://inside-r.org/r-doc/stats/heatmap"><span style="color: #003399; font-weight: bold;">heatmap</span></a><span style="color: #009900;">&#40;</span>samp<span style="color: #339933;">,</span> Rowv=<span style="color: #000000; font-weight: bold;">NA</span><span style="color: #339933;">,</span> Colv=<span style="color: #000000; font-weight: bold;">NA</span><span style="color: #339933;">,</span>
+        <a href="http://inside-r.org/r-doc/base/col"><span style="color: #003399; font-weight: bold;">col</span></a>=<a href="http://inside-r.org/r-doc/base/rev"><span style="color: #003399; font-weight: bold;">rev</span></a><span style="color: #009900;">&#40;</span>brewer.pal<span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">10</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;Set3&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+        revC=<span style="color: #000000; font-weight: bold;">TRUE</span><span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/scale"><span style="color: #003399; font-weight: bold;">scale</span></a>=<span style="color: #0000ff;">'column'</span><span style="color: #009900;">&#41;</span></pre></div></div>
+      </font></q>
+      <img src="figures/heatmap.png" width="180" height="400">
+  </div>
+
+   <div id="41_hierachical_gene_clustering" class="step" data-x="100" data-y="-2600" data-rotate-y="10" data-scale="1">
+    <q><font color="#D55E00" size="8">Hierachical Gene Clustering</font><br></q>
+    <q><font size="6">
+<div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;">hc <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/stats/hclust"><span style="color: #003399; font-weight: bold;">hclust</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/stats/dist"><span style="color: #003399; font-weight: bold;">dist</span></a><span style="color: #009900;">&#40;</span>samp<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span>
+samp.hc <span style="">&lt;-</span> samp<span style="color: #009900;">&#91;</span>hc<span style="">$</span>order<span style="color: #339933;">,</span><span style="color: #009900;">&#93;</span>
+<a href="http://inside-r.org/r-doc/stats/heatmap"><span style="color: #003399; font-weight: bold;">heatmap</span></a><span style="color: #009900;">&#40;</span>samp.hc<span style="color: #339933;">,</span> Rowv=<span style="color: #000000; font-weight: bold;">NA</span><span style="color: #339933;">,</span> Colv=<span style="color: #000000; font-weight: bold;">NA</span><span style="color: #339933;">,</span>
+        <a href="http://inside-r.org/r-doc/base/col"><span style="color: #003399; font-weight: bold;">col</span></a>=<a href="http://inside-r.org/r-doc/base/rev"><span style="color: #003399; font-weight: bold;">rev</span></a><span style="color: #009900;">&#40;</span>brewer.pal<span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">10</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;Set3&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+        revC=<span style="color: #000000; font-weight: bold;">TRUE</span><span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/scale"><span style="color: #003399; font-weight: bold;">scale</span></a>=<span style="color: #0000ff;">'column'</span><span style="color: #009900;">&#41;</span></pre></div></div>
+      </font></q>
+      <img src="figures/heatmap_hc.png" width="180" height="400">
+  </div>
+
+   <div id="42_kmeans_gene_clustering" class="step" data-x="600" data-y="-2200" data-rotate-y="15" data-scale="1">
+    <q><font color="#D55E00" size="8">Gene Clustering using kmeans</font><br></q>
+    <q><font size="4">
+<div style="overflow:auto;"><div class="geshifilter"><pre class="r geshifilter-R" style="font-family:monospace;">k <span style="">&lt;-</span> <a href="http://inside-r.org/r-doc/stats/kmeans"><span style="color: #003399; font-weight: bold;">kmeans</span></a><span style="color: #009900;">&#40;</span>samp<span style="color: #339933;">,</span> <span style="color: #cc66cc;">5</span><span style="color: #009900;">&#41;</span>
+samp.k <span style="">&lt;-</span> samp<span style="color: #009900;">&#91;</span> <a href="http://inside-r.org/r-doc/base/order"><span style="color: #003399; font-weight: bold;">order</span></a><span style="color: #009900;">&#40;</span><a href="http://inside-r.org/r-doc/survival/cluster"><span style="">cluster</span></a>=k<span style="">$</span>cluster<span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #009900;">&#93;</span>
+<a href="http://inside-r.org/r-doc/stats/heatmap"><span style="color: #003399; font-weight: bold;">heatmap</span></a><span style="color: #009900;">&#40;</span>samp.k<span style="color: #339933;">,</span> Rowv=<span style="color: #000000; font-weight: bold;">NA</span><span style="color: #339933;">,</span> Colv=<span style="color: #000000; font-weight: bold;">NA</span><span style="color: #339933;">,</span>
+        <a href="http://inside-r.org/r-doc/base/col"><span style="color: #003399; font-weight: bold;">col</span></a>=<a href="http://inside-r.org/r-doc/base/rev"><span style="color: #003399; font-weight: bold;">rev</span></a><span style="color: #009900;">&#40;</span>brewer.pal<span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">10</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;Set3&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+        revC=<span style="color: #000000; font-weight: bold;">TRUE</span><span style="color: #339933;">,</span> <a href="http://inside-r.org/r-doc/base/scale"><span style="color: #003399; font-weight: bold;">scale</span></a>=<span style="color: #0000ff;">'column'</span><span style="color: #009900;">&#41;</span></pre></div></div>
+      </font></q>
+      <img src="figures/heatmap_k.png" width="180" height="400">
+  </div>
+
+   <div id="43_clustering_application" class="step" data-x="-3500" data-y="-2650" data-rotate-y="15" data-scale="1">
+    <q><font color="#D55E00" size="8">Applications of gene clustering</font><br></q>
+    <q>
+      <font size="6">
+      Genes have similar expression profile are more likely to have similar functions, and cooperate each others to perform the particular biological process. <br>
+      It is widely used to:
+      <font size="5">
+        <li>Infer functions of novel genes</li>
+        <li>Investigate functions of gene cluster
+      </font><br>
+      <br>It is important to find the functions of genes, and moreover, how they interacte to generate biological function.</li></font></q>
+   </div>
+
+   <div id="43_go_semantic" class="step" data-x="1400" data-y="-2300" data-rotate-y="15" data-scale="1">
+    <q><font color="#D55E00" size="8">GO Semantic Similarity Measurement</font><br></q>
+    <q>
+      <font size="6">       
+        <li>Gene Ontology (GO) is organized as a directed acyclic graph (DAG), laying the foundation for quantitative computation of gene knowledge.</li>
+        <li>The semantic comparisons of GO annotations provide quantitative ways to compute similarities among genes and gene products.</li>    
+      </font>
+    </q> 
+    <img style="float:middle" src="figures/go_dag.png" width="487" height="203"> 
+  </div>
+
+   <div id="44_go_semantic" class="step" data-x="2600" data-y="-2300" data-rotate-y="20" data-scale="1">
+    <q><font color="#D55E00" size="8">GO Semantic Similarity Measurement</font><br></q>
+    <q><font size="4">
+      <font color="#0072B2">Resnik (1999)</font> Semantic Similarity in a Taxonomy: An Information-Based Measure and its Application to Problems of Ambiguity in Natural Language. <em><b>Journal of Artifical Intelligence Research</b></em>.<br>
+      <font color="#0072B2">Lin (1998)</font> An Information-Theoretic Definition of Similarity. In <em><b>Proceedings of the Fifteenth International Conference on Machine Learning</b></em>.<br>
+      <font color="#0072B2">Jiang and Conrath(1997)</font> Semantic Similarity Based on Corpus Statistics and Lexical Taxonomy. In <em><b>International Conference Research on Computational Linguistics</b></em>.<br>
+      <font color="#0072B2">Schlicer (2006)</font> A new measure for functional similarity of gene products based on Gene Ontology. <em><b>BMC Bioinformatics</b></em>.<br>
+      <font color="#0072B2">Wang (2007)</font> A new method to measure the semantic similarity of GO terms. <em><b>Bioinformatics</b></em>.<br>
+      </font></q>
+  </div>
+
+   <div id="45_go_semantic" class="step" data-x="3800" data-y="-2400" data-rotate-y="25" data-scale="1">
+    <q><font color="#D55E00" size="8">Information content based methods</font><br></q>
+    <q>
+      <font color="#0072B2" size="6">Concepts</font>    
+      <font size="4">  
+        <li>p(<em>t</em>) = the frequency of the term <em>t</em> occurring in GO corpus</li>
+        <li>IC(<em>t</em>) = -log p(<em>t</em>)</li>
+        <li>MICA: most informative common ancestor</li>   
+      </font>
+    </q>
+    <q>
+      <font color="#0072B2" size="6">Definition</font> <br>
+      <font size="4">  
+        <!-- sim_{Resnik}(t_1, t_2) = IC(MICA) -->
+        <img src="figures/resnik.png">
+        <!-- sim_{Lin}(t_1, t_2) = \frac{2IC(MICA)}{IC(t_1)+IC(t_2)} -->
+        <img src="figures/lin.png">
+        <!-- sim_{Rel}(t_1, t_2) = \frac{2IC(MICA)(1-p(MICA))}{IC(t_1)+IC(t_2)} -->
+        <img src="figures/rel.png">
+        <!-- sim_{Jiang}(t_1, t_2) = 1-min(1, IC(t_1) +IC(t_2)-2IC(MICA)) -->
+        <img src="figures/jiang.png">
+      </font>
+    </q> 
+  </div>
+
+   <div id="46_graph_semantic" class="step" data-x="4200" data-y="-1600" data-rotate-y="30" data-scale="1">
+    <q><font color="#D55E00" size="8">Graph structure based method</font><br></q>
+    <q>  
+      <font size="5">  
+        <li>Using the topology of the GO graph structure</li>
+        <li>A GO term can be represented as <img src="figures/dag.png"></li>
+        <li>Defined S-value to encode the semantics of a GO term in a measurable format</li>   
+        <!-- 
+        \{
+        \begin{array}{l}
+          S_{A}(A)=1 \\
+          S_{A}(\textit{t})=\max\{w_{e} \times S_{A}(\textit{t}') |
+          \textit{t}' \in childrenof(\textit{t}) \}$ if $\textit{t}
+          \ne A
+        \end{array}
+-->
+        <img src="figures/wang1.png">
+        <li>Semantic value of GO term A</li>
+        <!-- SV(A)=\displaystyle\sum_{t \in T_{A}} S_{A}(t) -->
+        <img src="figures/wang2.png">
+        <li>Semantic similarity between GO terms A and B</li>
+        <!-- sim_{Wang}(A, B) = \displaystyle\sum_{t \in T_{A} \cap
+          T_{B}} \frac{S_{A}(t) + S_{B}(t)}{SV(A) + SV(B)} -->
+          <img src="figures/wang3.png">
+      </font>
+    </q>
+  </div>
+
+   <div id="47_gene_semantic" class="step" data-x="4200" data-y="-900" data-rotate-y="20" data-scale="1">
+    <q><font color="#D55E00" size="8">Similarities among gene products</font><br></q>
+    <q>
+        <!-- g_{1}=\{go_{11},go_{12} \cdots go_{1m}\} -->
+        <img src="figures/g1.png"><br>
+        <!-- g_{2}=\{go_{21},go_{22} \cdots go_{2n}\} -->
+        <img src="figures/g2.png"><br>
+        <!-- sim_{max}(g_1, g_2) = \displaystyle\max_{1 \le i \le m, 1 \le j \le n} sim(go_{1i}, go_{2j}) -->
+        <img src="figures/sim_max.png"><br>
+        <!-- sim_{avg}(g_1, g_2) = \frac{\displaystyle\sum_{i=1}^m\sum_{j=1}^nsim(go_{1i}, go_{2j})}{m \times n} -->
+        <img src="figures/sim_avg.png"><br>
+        <!-- sim_{rcmax}(g_1, g_2) = \max(\frac{\displaystyle\sum_{i=1}^m \max_{1
+    \le j \le n} sim(go_{1i}, go_{2j})}{m},
+\frac{\displaystyle\sum_{j=1}^n \max_{1 \le i \le m} sim(go_{1i},
+  go_{2j})}{n}) -->
+        <img src="figures/sim_rcmax.png" width="800"><br>
+        <!-- sim_{BMA}(g_1, g_2) = \frac{\displaystyle\sum_{1=i}^m \max_{1 \le j
+    \le n}sim(go_{1i}), go_{2j}) + \displaystyle\sum_{1=j}^n \max_{1
+    \le i \le m}sim(go_{1i}, go_{2j})} {m+n} -->
+        <img src="figures/sim_bma.png" width="800"><br>
+    </q>
+  </div>
+
+
+   <div id="48_gosemsim" class="step" data-x="4200" data-y="0" data-rotate-y="20" data-scale="1">
+    <q><font color="#D55E00" size="8">GOSemSim</font><br></q>
+    <q><font size="5">
+        <li>Implemented five methods proposed by Resnik, Schlicker, Jiang, Lin and Wang.</li>
+        <li>Support many species<br>
+          Anopheltes, Arabidopsis, Bovine, Canine, Chicken, Chimp, Coelicolor, E coli strain K12 and Sakai, Fly, Human, Malaria, Mouse, Pig, Rhesus, Rat, Worm, Xenopus, Yeast and Zebrafish.</li>
+        
+        <li>Open source<br>
+        GPL-2 License<br>
+        Release within bioconductor project.</li></font>
+        <img src="figures/gosemsimpub.png">
+    </q>
+  </div>
+
+   <div id="49_mir" class="step" data-x="4200" data-y="800" data-rotate-y="15" data-scale="1">
+    <q><font color="#D55E00" size="8">Functional similarity of miRNAs</font><br></q>
+    <q><font color="#0072B2" size="6">miRNA involved in many critical biological processes</font></q>
+    <q><font size="5">
+        <li>Cell divelopment and differentiation</li>
+        <li>Immune system regulation</li>
+        <li>Cancer progression</li><img style="float:right" src="figures/mir.png" width="600" height="400">
+        <li>Proliferation</li>
+        <li>Apoptosis</li>
+        <li>Virus-host interaction</li>
+      </font>  
+    </q>
+  </div>
+
+   <div id="50_mir" class="step" data-x="4200" data-y="1600" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00" size="8">Functional similarity of miRNAs</font><br></q>
+    <q><font color="#0072B2" size="6">Human miRNA classification</font></q>
+    <q><font size="5">
+        <li>grouped into 46 families on the basis of hairpin sequences conservation by Rfam (Griffiths-Jones, <em><b>NAR</b></em>, 2003)</li>
+        <li>60 families according to pre-miRNAs sequence and secondary structures by FOLDALIGN (Kaczkowski, <em><b>Bioinformatics</b></em>, 2009).</li>
+      </font>  
+    </q>
+    <q><font color="#0072B2" size="6">Drawbacks</font></q>
+    <q><font size="5">
+        <li>miRNA-mRNA duplex allows mismatch</li>
+        <li>Target recognition only matches the 6-8nt long seed region</li>
+        <li>miRNAs with similar sequences and pre-miRNAs with similar structures may have distinctive functions</li>
+      </font>  
+    </q>
+  </div>
+
+   <div id="51_mir" class="step" data-x="4200" data-y="2300" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00" size="8">Functional similarity of miRNAs</font><br></q>
+    <q><font size="5">
+        <img style="float:right" src="figures/funsim.png" width="280" height="280">       
+        <li>Defined miRNAs functional similarities based on the functions of their target genes</li>
+        <li>Calculated by GOSemSim</li>
+        <li>Functional similarity obtained by our method showed positive correlation with expression similarity(<em>r</em>=0.6055), in which the functions of miRNAs can partially be explained by their expressin level.</li>
+      </font>  
+    </q>
+    <img style="float:right" src="figures/jiomics.png" width="500">
+  </div>
+
+   <div id="52_mir" class="step" data-x="4200" data-y="3000" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00" size="8">Functional similarity of miRNAs</font><br></q>
+    <q><font color="#0072B2" size="6">44 significant clusters were obtained</font></q>
+        <q><font size="5">     
+        <li>Using multi-scale bootstrap re-sampling to estimate the uncertainty of cluster analysis</li>
+      </font></q>
+    <q><font color="#0072B2" size="6">Reveal the functional diversity of miRNA families<br>
+        Coherent with biological knowledge</font></q>
+        <q><font size="5">     
+        <li>Disease association</li>
+        <li>Evolutionary conservation</li>
+        <li>Virus-Host interaction</li>
+      </font></q>
+    <img style="float:right" src="figures/mircluster.png" width="800">
+  </div>
+
+   <div id="53_viralmir" class="step" data-x="3200" data-y="3000" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00" size="8">Functional similarity analysis of human virus-encoded miRNAs</font><br></q>
+    <q><font color="#0072B2" size="6">Host target gene prediction of viral miRNAs</font></q>
+        <q><font size="5">     
+        <li>Probality of interaction by Target Accessibility (PITA)</li>
+        <li>Computes the difference bewteen the free energy gained from the formation of the miRNA-mRNA duplex and the energetic cost of unpairing the mRNA to make it accessible to the miRNA (Kertesz, <em><b>Nat Genet</b></em>, 2007)</li>
+      </font></q>
+    <q><font color="#0072B2" size="6">Functional similarity measurement of viral miRNAs</font></q>
+    <img style="float:left" src="figures/virmir.png" width="250"><img style="float:right" src="figures/virmircls.png" width="400">
+  </div>
+
+   <div id="54_viralmir" class="step" data-x="2200" data-y="2800" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00" size="8">Functional similarity analysis of human virus-encoded miRNAs</font><br></q>
+    <img style="float:right" src="figures/virmircomparison.png" width="400">
+        <q><font size="6">     
+        <li>Different viruses have distinct strategies to reshape cellular status</li>
+        <li>We wish to suggest that viral miRNAs were designed to against important pathways to favor their pathogenesis</li>
+      </font></q>
+  </div>
+
+   <div id="55_viralmir" class="step" data-x="1200" data-y="2700" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00" size="6">Functional similarity analysis of human virus-encoded miRNAs</font><br></q>
+    <q><font size="5">
+      <li>Phylogenetic analysis</li>
+        <font size="4">
+        <li>Constructed phylogenetic tree of human viruses based on the functions their miRNAs encoded</li>
+        <li>Compared with phylogenetic tree obtained from whole genome sequence alignment</li>
+        <li>The similarity between phylogenetic trees obtained from genome sequences and miRNA sequences is 0.455</li>
+      </font>
+      <li>Our findings suggesting that viral miRNAs may evolve more rapidly than their genome</li>
+      <li>Especially, the functions of viral miRNAs evolve even more rapidly than their sequences</li>
+      <img style="float:left" src="figures/mirphy.png" width="250">
+      <img style="float:right" src="figures/virmirpub.png" width="400">    
+      </font></q>  
+  </div>
+
+
+   <div id="56_gosemsim_applications" class="step" data-x="300" data-y="3000" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00" size="6">Other applications to GO semantic similarity</font><br></q>
+    <q><font size="5">
+    <li>scoring protein-protein interactions<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <font size="4">J Shobhit, <em><b>BMC Bioinformatics</b></em>, 2010</font></li>
+    <li>confidence scoring of biological interactions<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <font size="4">K Atanas, <em><b>Nucleic Acids Research</b></em>, 2012</font></li>
+    <li>transcriptional network construction <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <font size="4">J Ambroise, <em><b>Statistical Applications in Genetics and Molecular Biology</b></em>, 2012</font></li>
+    <li>microRNA targets identification and annotation<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <font size="4">Dario C, <em><b>Brief Bioinform</b></em>, 2011</font></li>
+    <li>Disease similarity<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      <font size="4">M Sachin, <em><b>Journal of Biomedical Informatics</b></em>, 2011</font></li>
+    <li>Unknown gene/protein characterization <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <font size="4">MG Joshua, <em><b>Molecular & Celluar Proteomics</b></em>, 2011<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      IC Daniel, <em><b>Human Molecular Genetics</b></em>, 2012</font></li>
+    <li>Evolutionary rate covariation<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <font size="4">LC Nathan, <em><b>Genome Research</b></em>, 2012</font></li>
+    <li>Cancer property <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <font size="4">D Ignat, <em><b>PLOS ONE</b></em>, 2012</font></li>
+      </font></q>   
+  </div>
+
+
+   <div id="57_the_end" class="step" data-x="-800" data-y="3500" data-rotate-y="0" data-scale="1">
+    <q><font color="#D55E00" size="100">Thanks for your attention</font></q>   
+  </div>
+
+
+
+  <div id="overview" class="step" data-x="0" data-y="0" data-scale="10"></div>
+
+</div>  
+
+
+<script src="js/impress.js"></script>
+<script>impress().init();</script>
+
+</body>
+</html>

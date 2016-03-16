@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generating publication quality figures</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Generating publication quality figures">
+  <meta name="author" content="Guangchuang Yu">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/hemisu-light.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Generating publication quality figures</h1>
+    <h2>using R &amp; ggplot2</h2>
+    <p>Guangchuang Yu<br/>Jul. 24, 2014</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <article data-timings="">
+    <p><img src="figure/boxplot_nature.png" alt="&#39;boxplot&#39;"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-1.png" alt="plot of chunk unnamed-chunk-1"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <article data-timings="">
+    <p><img src="figure/boxplotR.png" alt="&#39;boxplotR&#39;">
+<img src="assets/fig/unnamed-chunk-2.png" alt="plot of chunk unnamed-chunk-2"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h3>Why ?</h3>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>There are so many biologists use excel for graphing.</li>
+<li>It&#39;s easy to create a barplot in excel, but hard for boxplot.</li>
+</ul>
+
+<p><img src="assets/fig/unnamed-chunk-3.png" alt="plot of chunk unnamed-chunk-3"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-4.png" alt="plot of chunk unnamed-chunk-4"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Power</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">require(ChIPseeker)
+files &lt;- getSampleFiles()
+peak &lt;- readPeakFile(files[[4]])
+peak[1:2,]
+</code></pre>
+
+<pre><code>## GRanges with 2 ranges and 2 metadata columns:
+##       seqnames           ranges strand |          V4        V5
+##          &lt;Rle&gt;        &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;factor&gt; &lt;numeric&gt;
+##   [1]     chr1 [815825, 818154]      * | MACS_peak_1     113.1
+##   [2]     chr1 [894175, 895222]      * | MACS_peak_2      51.0
+##   ---
+##   seqlengths:
+##     chr1 chr10 chr11 chr12 chr13 chr14 ...  chr7  chr8  chr9  chrX  chrY
+##       NA    NA    NA    NA    NA    NA ...    NA    NA    NA    NA    NA
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Power</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">plotChrCov(peak, weightCol=&quot;V5&quot;)
+</code></pre>
+
+<p><img src="figure/chrCoverage.png", width="600px" /></p>
+
+<!-- !['coverage'](figure/chrCoverage.png) -->
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Power</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="figure/ggmap.png", width="900px" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Flexibility</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="figure/AAdensity.png", width="400px" />
+<img style="float:right" src="figure/hisAA.png", width="450px" />
+<a href="http://pubs.rsc.org/en/content/articlelanding/2013/mt/c3mt00126a">Metallomics. 2013, 5(7):928-935</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Flexibility</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Proteomics. 2011, 11(11):2182-94.</p>
+
+<p><img style="float:left" src="figure/pride.png" width="300px" height="300px"/>
+<img src="figure/msnbase.png" width="500px" height="500px"/></p>
+
+<!--!['pride'](figure/pride.png) !['msnbase'](figure/msnbase.png)-->
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Fun</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-8.png" alt="plot of chunk unnamed-chunk-8"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Fun</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-9.png" alt="plot of chunk unnamed-chunk-9"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>woo your girl/boy friend</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><a href="http://www.mathematische-basteleien.de/heart.htm">http://www.mathematische-basteleien.de/heart.htm</a>
+<img src="assets/fig/unnamed-chunk-10.png" alt="plot of chunk unnamed-chunk-10"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Outlines</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Data and Mapping</h3>
+
+<h3>Geometric</h3>
+
+<h3>Scale</h3>
+
+<h3>Layer</h3>
+
+<h3>Facet</h3>
+
+<h3>Theme</h3>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h3>Data and Mapping</h3>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>ggplot - The main function where you specify the dataset and
+variables to plot</li>
+<li>aes - aesthetics
+
+<ul>
+<li>shape, transparency (alpha), color, fill, linetype.</li>
+</ul></li>
+</ul>
+
+<h3>Geometric</h3>
+
+<ul>
+<li>geoms - geometric objects
+
+<ul>
+<li>geom_point(), geom_bar(), geom_density(), geom_line(),
+geom_area()</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>The iris dataset</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">data(iris)
+head(iris)
+</code></pre>
+
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>scatter plot</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width)) + geom_point()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-12.png" alt="plot of chunk unnamed-chunk-12"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>increase the size</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width)) + geom_point(size=3)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-13.png" alt="plot of chunk unnamed-chunk-13"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>add color</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width, color=Species)) +
+         geom_point(size=3)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-14.png" alt="plot of chunk unnamed-chunk-14"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>differentiate points by shape</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width, color=Species)) + 
+        geom_point(aes(shape=Species), size=3)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-15.png" alt="plot of chunk unnamed-chunk-15"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>histogram</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(data=iris) + 
+geom_histogram(aes(x=Sepal.Length), binwidth=0.2, fill=&quot;steelblue&quot;, color=&quot;black&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-16.png" alt="plot of chunk unnamed-chunk-16"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>fill by Species</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(data=iris) + 
+geom_histogram(aes(x=Sepal.Length, fill=Species), binwidth=0.2, color=&quot;black&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-17.png" alt="plot of chunk unnamed-chunk-17"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>the diamonds dataset</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">data(diamonds)
+set.seed(42)
+dsmall &lt;- diamonds[sample(nrow(diamonds), 1000), ]
+head(dsmall)
+</code></pre>
+
+<pre><code>##       carat       cut color clarity depth table price    x    y    z
+## 49345  0.71 Very Good     H     SI1  62.5    60  2096 5.68 5.75 3.57
+## 50545  0.79   Premium     H     SI1  61.8    59  2275 5.97 5.91 3.67
+## 15434  1.03     Ideal     F     SI1  62.4    57  6178 6.48 6.44 4.03
+## 44792  0.50     Ideal     E     VS2  62.2    54  1624 5.08 5.11 3.17
+## 34614  0.27     Ideal     E     VS1  61.6    56   470 4.14 4.17 2.56
+## 27998  0.30   Premium     E     VS2  61.7    58   658 4.32 4.34 2.67
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>barplot</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(dsmall, aes(x=clarity, fill=cut)) + geom_bar()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-19.png" alt="plot of chunk unnamed-chunk-19"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>side-by-side barplot</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(dsmall, aes(x=clarity, fill=cut)) + geom_bar(position=&quot;dodge&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-20.png" alt="plot of chunk unnamed-chunk-20"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>density plot</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(dsmall)+geom_density(aes(x=price, colour=cut))
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-21.png" alt="plot of chunk unnamed-chunk-21"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-27" style="background:;">
+  <hgroup>
+    <h2>density plot</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(dsmall)+geom_density(aes(x=price, fill=clarity), alpha=0.8)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-22.png" alt="plot of chunk unnamed-chunk-22"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-28" style="background:;">
+  <hgroup>
+    <h2>boxplot</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(dsmall)+geom_boxplot(aes(x=cut, y=price,fill=color))
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-23.png" alt="plot of chunk unnamed-chunk-23"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-29" style="background:;">
+  <hgroup>
+    <h2>the climate dataset</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">climate &lt;- read.csv(&quot;data/climate.csv&quot;)
+head(climate)
+</code></pre>
+
+<pre><code>##     X   Source Year Anomaly1y Anomaly5y Anomaly10y Unc10y
+## 1 102 Berkeley 1901        NA        NA     -0.162  0.109
+## 2 103 Berkeley 1902        NA        NA     -0.177  0.108
+## 3 104 Berkeley 1903        NA        NA     -0.199  0.104
+## 4 105 Berkeley 1904        NA        NA     -0.223  0.105
+## 5 106 Berkeley 1905        NA        NA     -0.241  0.107
+## 6 107 Berkeley 1906        NA        NA     -0.294  0.106
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-30" style="background:;">
+  <hgroup>
+    <h2>line plot</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">p &lt;- ggplot(climate, aes(Year, Anomaly10y)) + geom_line()
+p
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-25.png" alt="plot of chunk unnamed-chunk-25"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-31" style="background:;">
+  <hgroup>
+    <h2>line plot with confidence interval</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">p + geom_ribbon(aes(ymin = Anomaly10y - Unc10y, 
+        ymax = Anomaly10y + Unc10y), fill = &quot;blue&quot;, alpha = .1)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-26.png" alt="plot of chunk unnamed-chunk-26"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-32" style="background:;">
+  <hgroup>
+    <h2>Scale</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Define how your data will be plotted
+
+<ul>
+<li>continuous, discrete, log</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-33" style="background:;">
+  <hgroup>
+    <h2>scatter plot of price vs carat</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(dsmall, aes(x=carat, y=price, color=color))+geom_point()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-27.png" alt="plot of chunk unnamed-chunk-27"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-34" style="background:;">
+  <hgroup>
+    <h2>transform y axis in log scale</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(dsmall, aes(x=carat, y=price, color=color))+geom_point() + scale_y_log10()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-28.png" alt="plot of chunk unnamed-chunk-28"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-35" style="background:;">
+  <hgroup>
+    <h2>manual color scale</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">cols= c(&quot;#A6CEE3&quot;, &quot;#99CD91&quot;, &quot;#B89B74&quot;, &quot;#F06C45&quot;, &quot;#ED8F47&quot;, &quot;#825D99&quot;, &quot;#B15928&quot;)
+ggplot(dsmall, aes(x=carat, y=price, color=color))+geom_point() + 
+      scale_y_log10() + scale_color_manual(values=cols)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-29.png" alt="plot of chunk unnamed-chunk-29"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-36" style="background:;">
+  <hgroup>
+    <h2>Layer</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="figure/batman_equation.jpg", height="550px" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-37" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">f1 &lt;- function(x) {
+    y1 &lt;- 3*sqrt(1-(x/7)^2)
+    y2 &lt;- -3*sqrt(1-(x/7)^2)
+    y &lt;- c(y1,y2)
+    d &lt;- data.frame(x=x,y=y)
+    d &lt;- d[d$y &gt; -3*sqrt(33)/7,]
+    return(d)
+}
+x1 &lt;- c(seq(3, 7, 0.001), seq(-7, -3, 0.001))
+d1 &lt;- f1(x1)
+p1 &lt;- ggplot(d1,aes(x,y)) + geom_point(color=&quot;red&quot;) +xlab(&quot;&quot;) + ylab(&quot;&quot;) + theme_bw()
+p1
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-30.png" alt="plot of chunk unnamed-chunk-30"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-38" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">x2 &lt;- seq(-4,4, 0.001)
+y2 &lt;- abs(x2/2)-(3*sqrt(33)-7)*x2^2/112-3 + sqrt(1-(abs(abs(x2)-2)-1)^2)
+d2 &lt;- data.frame(x2=x2, y2=y2)
+p2 &lt;- p1 + geom_point(data=d2, aes(x=x2,y=y2), color=&quot;yellow&quot;)
+p2
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-31.png" alt="plot of chunk unnamed-chunk-31"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-39" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">x3 &lt;- c(seq(0.75,1,0.001), seq(-1,-0.75,0.001))
+y3 &lt;- 9-8*abs(x3)
+d3 &lt;- data.frame(x3=x3, y3=y3)
+p3 &lt;- p2+geom_point(data=d3, aes(x=x3,y=y3), color=&quot;green&quot;)
+p3
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-32.png" alt="plot of chunk unnamed-chunk-32"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-40" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">x4 &lt;- c(seq(0.5,0.75,0.001), seq(-0.75,-0.5,0.001))
+y4 &lt;- 3*abs(x4)+0.75
+d4 &lt;- data.frame(x4=x4,y4=y4)
+p4 &lt;- p3+geom_point(data=d4, aes(x=x4,y=y4), color=&quot;steelblue&quot;)
+p4
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-33.png" alt="plot of chunk unnamed-chunk-33"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-41" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">x5 &lt;- seq(-0.5,0.5,0.001)
+y5 &lt;- rep(2.25,length(x5))
+d5 &lt;- data.frame(x5=x5,y5=y5)
+p5 &lt;- p4+geom_point(data=d5, aes(x=x5,y=y5))
+p5
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-34.png" alt="plot of chunk unnamed-chunk-34"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-42" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">x6 &lt;- c(seq(-3,-1,0.001), seq(1,3,0.001))
+y6 &lt;- 6 * sqrt(10)/7 +
+    (1.5 - 0.5 * abs(x6)) * sqrt(abs(abs(x6)-1)/(abs(x6)-1)) -
+    6 * sqrt(10) * sqrt(4-(abs(x6)-1)^2)/14
+d6 &lt;- data.frame(x6=x6,y6=y6)
+d6 &lt;- d6[-which(is.na(d6[,2])), ]
+p6 &lt;- p5+geom_point(data=d6,aes(x=x6,y=y6), colour=&quot;blue&quot;)
+p6
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-35.png" alt="plot of chunk unnamed-chunk-35"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-43" style="background:;">
+  <hgroup>
+    <h2>boxplot</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">p &lt;- ggplot(iris, aes(x=Species, y=Sepal.Width, fill=Species)) +
+     geom_boxplot(alpha=0.6, width=0.5)
+p
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-36.png" alt="plot of chunk unnamed-chunk-36"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-44" style="background:;">
+  <hgroup>
+    <h2>boxplot with data points</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">p &lt;- p + geom_dotplot(binaxis=&quot;y&quot;, stackdir=&quot;center&quot;, position=&quot;dodge&quot;, dotsize=0.5)
+p
+</code></pre>
+
+<pre><code>## stat_bindot: binwidth defaulted to range/30. Use &#39;binwidth = x&#39; to adjust this.
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-37.png" alt="plot of chunk unnamed-chunk-37"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-45" style="background:;">
+  <hgroup>
+    <h2>violin: add density curve</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">vp &lt;- p+geom_violin(alpha=0.3)
+vp
+</code></pre>
+
+<pre><code>## stat_bindot: binwidth defaulted to range/30. Use &#39;binwidth = x&#39; to adjust this.
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-38.png" alt="plot of chunk unnamed-chunk-38"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-46" style="background:;">
+  <hgroup>
+    <h2>Facet</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
+         geom_point() + facet_grid(.~Species)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-39.png" alt="plot of chunk unnamed-chunk-39"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-47" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
+         geom_point() + facet_grid(Species~.)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-40.png" alt="plot of chunk unnamed-chunk-40"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-48" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">ggplot(dsmall, aes(carat, price, color=color)) +
+        geom_point() +facet_grid(cut~clarity)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-41.png" alt="plot of chunk unnamed-chunk-41"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-49" style="background:;">
+  <hgroup>
+    <h2>Theme</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>A great way to define custom plots</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-50" style="background:;">
+  <hgroup>
+    <h2>The JIONG (囧)</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">f &lt;- function(x) 1/(x^2-1)
+x &lt;- seq(-3,3, by=0.001)
+y &lt;- f(x)
+d &lt;- data.frame(x=x,y=y)
+
+p &lt;- ggplot()
+p &lt;- p+geom_rect(fill = &quot;white&quot;,color=&quot;black&quot;,size=3,
+     aes(NULL, NULL,xmin=-3, xmax=3,
+     ymin=-3,ymax=3, alpha=0.1))
+
+p &lt;- p + geom_line(data=d, aes(x,y), size=3)+ylim(-3,3)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-51" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">p
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-43.png" alt="plot of chunk unnamed-chunk-43"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-52" style="background:;">
+  <hgroup>
+    <h2>all decoration are modifiable</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">theme_null &lt;- function() {
+    theme_bw() %+replace%
+    theme(axis.text.x=element_blank(),
+    axis.text.y=element_blank(),
+    legend.position=&quot;none&quot;,
+    panel.grid.minor=element_blank(),
+    panel.grid.major=element_blank(),
+    panel.background=element_blank(),
+    axis.ticks=element_blank(),
+    panel.border=element_blank())
+}
+
+p &lt;- p+theme_null()+xlab(&quot;&quot;)+ylab(&quot;&quot;)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-53" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">p
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-45.png" alt="plot of chunk unnamed-chunk-45"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-54" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">vp &lt;- vp + theme(legend.position=&quot;bottom&quot;)
+vp
+</code></pre>
+
+<pre><code>## stat_bindot: binwidth defaulted to range/30. Use &#39;binwidth = x&#39; to adjust this.
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-46.png" alt="plot of chunk unnamed-chunk-46"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-55" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">vp &lt;- vp + theme(axis.text.x = element_text(colour = &quot;purple&quot;, 
+        size = 20))
+vp
+</code></pre>
+
+<pre><code>## stat_bindot: binwidth defaulted to range/30. Use &#39;binwidth = x&#39; to adjust this.
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-47.png" alt="plot of chunk unnamed-chunk-47"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-56" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">vp + theme(axis.title.y = element_text(angle = 0))
+</code></pre>
+
+<pre><code>## stat_bindot: binwidth defaulted to range/30. Use &#39;binwidth = x&#39; to adjust this.
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-48.png" alt="plot of chunk unnamed-chunk-48"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-57" style="background:;">
+  <hgroup>
+    <h2>many pre-defined theme</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>wall street journal</h3>
+
+<pre><code class="r">require(ggthemes)
+vp+theme_wsj()
+</code></pre>
+
+<pre><code>## stat_bindot: binwidth defaulted to range/30. Use &#39;binwidth = x&#39; to adjust this.
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-50.png" alt="plot of chunk unnamed-chunk-50"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-58" style="background:;">
+  <hgroup>
+    <h2>Stata theme</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">vp+theme_stata()
+</code></pre>
+
+<pre><code>## stat_bindot: binwidth defaulted to range/30. Use &#39;binwidth = x&#39; to adjust this.
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-51.png" alt="plot of chunk unnamed-chunk-51"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-59" style="background:;">
+  <hgroup>
+    <h2>Case study</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><a href="http://www.ncbi.nlm.nih.gov/pubmed/21060948">Mol Biosyst. 2011, 7(2):472-9.</a></p>
+
+<p><img src="figure/yap1.png", height="200px" />
+<img src="assets/fig/unnamed-chunk-52.png" alt="plot of chunk unnamed-chunk-52"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-60" style="background:;">
+  <hgroup>
+    <h2>data</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">Normal &lt;- c(0.83, 0.79, 0.99, 0.69)
+Cancer &lt;- c(0.56, 0.56, 0.64, 0.52)
+m &lt;- c(mean(Normal), mean(Cancer))
+s &lt;- c(sd(Normal), sd(Cancer))
+d &lt;- data.frame(V=c(&quot;Normal&quot;, &quot;Cancer&quot;), mean=m, sd=s)
+d$V &lt;- factor(d$V, levels=c(&quot;Normal&quot;, &quot;Cancer&quot;))
+d
+</code></pre>
+
+<pre><code>##        V  mean      sd
+## 1 Normal 0.825 0.12477
+## 2 Cancer 0.570 0.05033
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-61" style="background:;">
+  <hgroup>
+    <h2>mapping &amp; geometric</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">p &lt;- ggplot(d, aes(V, mean, fill=V, width=.5))
+p &lt;- p+geom_errorbar(aes(ymin=mean, ymax=mean+sd, width=.2), 
+                     position=position_dodge(width=.8))
+p
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-54.png" alt="plot of chunk unnamed-chunk-54"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-62" style="background:;">
+  <hgroup>
+    <h2>geometric &amp; layer</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">p &lt;- p + geom_bar(stat=&quot;identity&quot;, position=position_dodge(width=.8), colour=&quot;black&quot;)
+p
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-55.png" alt="plot of chunk unnamed-chunk-55"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-63" style="background:;">
+  <hgroup>
+    <h2>scale</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">p &lt;- p + scale_fill_manual(values=c(&quot;grey80&quot;, &quot;white&quot;))
+p
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-56.png" alt="plot of chunk unnamed-chunk-56"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-64" style="background:;">
+  <hgroup>
+    <h2>theme</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">p &lt;- p + theme_bw() +theme(legend.position=&quot;none&quot;) + xlab(&quot;&quot;) + ylab(&quot;&quot;)
+p
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-57.png" alt="plot of chunk unnamed-chunk-57"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-65" style="background:;">
+  <hgroup>
+    <h2>theme</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">p &lt;- p + theme(axis.text.x = element_text(face=&quot;bold&quot;, size=14), 
+               axis.text.y = element_text(face=&quot;bold&quot;, size=14))
+p
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-58.png" alt="plot of chunk unnamed-chunk-58"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-66" style="background:;">
+  <hgroup>
+    <h2>scale</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">p &lt;- p+scale_y_continuous(expand=c(0,0), limits=c(0, 1.2), breaks=seq(0, 1.2, by=.2))
+p
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-59.png" alt="plot of chunk unnamed-chunk-59"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-67" style="background:;">
+  <hgroup>
+    <h2>geometric</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">p &lt;- p+geom_segment(aes(x=1, y=.98, xend=1, yend=1.1))
+p
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-60.png" alt="plot of chunk unnamed-chunk-60"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-68" style="background:;">
+  <hgroup>
+    <h2>geometric</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">p &lt;- p+geom_segment(aes(x=2, y=.65, xend=2, yend=1.1))
+p
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-61.png" alt="plot of chunk unnamed-chunk-61"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-69" style="background:;">
+  <hgroup>
+    <h2>geometric</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">p &lt;- p+geom_segment(aes(x=1, y=1.1, xend=2, yend=1.1))
+p
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-62.png" alt="plot of chunk unnamed-chunk-62"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-70" style="background:;">
+  <hgroup>
+    <h2>annotation</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">p &lt;- p + annotate(&quot;text&quot;, x=1.5, y=1.06, label=&quot;*&quot;)
+p
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-63.png" alt="plot of chunk unnamed-chunk-63"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-71" style="background:;">
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-64.png" alt="plot of chunk unnamed-chunk-64"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title=''>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title=''>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title=''>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Why ?'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title=''>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Power'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Power'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Power'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Flexibility'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Flexibility'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Fun'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Fun'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='woo your girl/boy friend'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Outlines'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Data and Mapping'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='The iris dataset'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='scatter plot'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='increase the size'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='add color'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='differentiate points by shape'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='histogram'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='fill by Species'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='the diamonds dataset'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='barplot'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='side-by-side barplot'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='density plot'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='density plot'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='boxplot'>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title='the climate dataset'>
+         29
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=30 title='line plot'>
+         30
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=31 title='line plot with confidence interval'>
+         31
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=32 title='Scale'>
+         32
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=33 title='scatter plot of price vs carat'>
+         33
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=34 title='transform y axis in log scale'>
+         34
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=35 title='manual color scale'>
+         35
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=36 title='Layer'>
+         36
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=37 title=''>
+         37
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=38 title=''>
+         38
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=39 title=''>
+         39
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=40 title=''>
+         40
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=41 title=''>
+         41
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=42 title=''>
+         42
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=43 title='boxplot'>
+         43
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=44 title='boxplot with data points'>
+         44
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=45 title='violin: add density curve'>
+         45
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=46 title='Facet'>
+         46
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=47 title=''>
+         47
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=48 title=''>
+         48
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=49 title='Theme'>
+         49
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=50 title='The JIONG (囧)'>
+         50
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=51 title=''>
+         51
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=52 title='all decoration are modifiable'>
+         52
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=53 title=''>
+         53
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=54 title=''>
+         54
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=55 title=''>
+         55
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=56 title=''>
+         56
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=57 title='many pre-defined theme'>
+         57
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=58 title='Stata theme'>
+         58
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=59 title='Case study'>
+         59
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=60 title='data'>
+         60
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=61 title='mapping &amp; geometric'>
+         61
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=62 title='geometric &amp; layer'>
+         62
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=63 title='scale'>
+         63
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=64 title='theme'>
+         64
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=65 title='theme'>
+         65
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=66 title='scale'>
+         66
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=67 title='geometric'>
+         67
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=68 title='geometric'>
+         68
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=69 title='geometric'>
+         69
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=70 title='annotation'>
+         70
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=71 title=''>
+         71
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
